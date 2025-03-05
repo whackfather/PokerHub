@@ -1,5 +1,6 @@
 using namespace std;
 
+void writeData();
 float roundUp(float n, int decimals);
 float roundDown(float n, int decimals);
 
