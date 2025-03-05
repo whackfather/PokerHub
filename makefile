@@ -1,5 +1,5 @@
-TARGET = main.exe
-SRC_FILES = main.cpp
+TARGET = addData.exe
+SRC_FILES = addData.cpp
 
 CXX = g++
 OBJECTS = $(SRC_FILES:.cpp=.o)

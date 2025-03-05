@@ -8,11 +8,11 @@ typedef struct {
     int noOfPlayers;
     float dealerTipPerc;
     float dealerTotal;
-} game;
+} gameInfo;
 
 typedef struct {
     char name[20];
     float buyIn;
     float grossWin;
-    char diffTip[1];
-} player;
+    char diffTip;
+} playerInfo;
