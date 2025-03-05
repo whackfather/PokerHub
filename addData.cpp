@@ -13,7 +13,7 @@ int main() {
     cout << "Number of players: "; cin >> game.noOfPlayers;
     cout << "Dealer tip (%): "; cin >> game.dealerTipPerc;
     game.dealerTipPerc /= 100.0f;
-    game.dealerTotal = 0.0f;
+    game.dealerTotal = 0.00f;
     fprintf(data, "%s\n", game.date);
 
     for (int i = 0; i < game.noOfPlayers; i++) {
