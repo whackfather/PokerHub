@@ -11,7 +11,7 @@ typedef struct {
 } gameInfo;
 
 typedef struct {
-    char name[20];
+    char name[25];
     float buyIn;
     float grossWin;
     char diffTip;
