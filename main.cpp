@@ -2,10 +2,27 @@
 #include <cmath>
 #include <stdio.h>
 #include <vector>
-#include "addData.h"
+#include <fstream>
+#include <sstream>
+#include "main.h"
 using namespace std;
 
 int main() {
+    ifstream file("data.csv");
+    vector<string> lines;
+    string line;
+    while (getline(file, line)) {
+        lines.push_back(line);
+    }
+    file.close();
+
+    for (const string& currentLine : lines) {
+        cout << currentLine << endl;
+    }
+    return 0;
+}
+
+void writeData() {
     gameInfo game;
     FILE *data;
     data = fopen("data.csv", "a");
@@ -14,7 +31,7 @@ int main() {
     cout << "Dealer tip (%): "; cin >> game.dealerTipPerc;
     game.dealerTipPerc /= 100.0f;
     game.dealerTotal = 0.00f;
-    fprintf(data, "%s\n", game.date);
+    fprintf(data, "%s,0,0,0,0,0\n", game.date);
 
     for (int i = 0; i < game.noOfPlayers; i++) {
         vector<playerInfo> players(game.noOfPlayers);
@@ -40,7 +57,6 @@ int main() {
     }
 
     fclose(data);
-    return 0;
 }
 
 float roundUp(float n, int decimals) {
