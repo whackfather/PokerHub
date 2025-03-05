@@ -1,4 +1,4 @@
-TARGET = addDat.exe
+TARGET = addData.exe
 SRC_FILES = addData.cpp
 
 CXX = g++
