@@ -1,4 +1,5 @@
 #include <vector>
+#include <string>
 using namespace std;
 
 vector<vector<string>> readData(string);
@@ -8,14 +9,14 @@ float roundUp(float, int);
 float roundDown(float, int);
 
 typedef struct {
-    char date[6];
+    string date;
     int noOfPlayers;
     float dealerTipPerc;
     float dealerTotal;
 } gameInfo;
 
 typedef struct {
-    char name[25];
+    string name;
     float buyIn;
     float grossWin;
     char diffTip;
