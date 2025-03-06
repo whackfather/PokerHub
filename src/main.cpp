@@ -15,9 +15,9 @@ using namespace std;
 // Main function
 int main() {
     vector<vector<string>> csvData = readData("data.csv");
-    string desiredDate = "022325";
-    vector<vector<string>> desiredInfo = getNightInfo("022325", csvData);
-    cout << desiredInfo[2][2] << endl;
+    string desiredDate = "020225";
+    vector<vector<string>> desiredInfo = getNightInfo(desiredDate, csvData);
+    cout << desiredInfo[4][4] << endl;
     return 0;
 }
 
