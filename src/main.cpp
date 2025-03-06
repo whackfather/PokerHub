@@ -8,7 +8,13 @@
 using namespace std;
 
 int main() {
-    ifstream file("data.csv");
+    vector<vector<string>> csvData = readData("data.csv");
+    cout << csvData[14][3] << endl;
+    return 0;
+}
+
+vector<vector<string>> readData(string filename) {
+    ifstream file(filename);
     vector<string> lines;
     string line;
     while (getline(file, line)) {
@@ -16,10 +22,13 @@ int main() {
     }
     file.close();
 
+    vector<vector<string>> csvData;
     for (const string& currentLine : lines) {
-        cout << currentLine << endl;
+        vector<string> splitLine = split(currentLine, ',');
+        csvData.push_back(splitLine);
     }
-    return 0;
+
+    return csvData;
 }
 
 void writeData() {
@@ -57,6 +66,16 @@ void writeData() {
     }
 
     fclose(data);
+}
+
+vector<string> split(const string& str, char delimiter) {
+    vector<string> cells;
+    stringstream ss(str);
+    string cell;
+    while (getline(ss, cell, delimiter)) {
+        cells.push_back(cell);
+    }
+    return cells;
 }
 
 float roundUp(float n, int decimals) {
