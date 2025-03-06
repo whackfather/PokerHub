@@ -9,7 +9,7 @@ using namespace std;
 
 int main() {
     vector<vector<string>> csvData = readData("data.csv");
-    cout << csvData[14][3] << endl;
+    cout << csvData[11][4] << endl;
     return 0;
 }
 
@@ -40,7 +40,7 @@ void writeData() {
     cout << "Dealer tip (%): "; cin >> game.dealerTipPerc;
     game.dealerTipPerc /= 100.0f;
     game.dealerTotal = 0.00f;
-    fprintf(data, "%s,0,0,0,0,0\n", game.date);
+    fprintf(data, "%s,0,0,0,0,0\n", game.date.c_str());
 
     for (int i = 0; i < game.noOfPlayers; i++) {
         vector<playerInfo> players(game.noOfPlayers);
@@ -55,13 +55,13 @@ void writeData() {
             game.dealerTotal += customTip;
             float actualWin = players[i].grossWin - customTip;
             float netWin = actualWin - players[i].buyIn;
-            fprintf(data, "%s,%.2f,%.2f,%.2f,%.2f,%.2f\n", players[i].name, players[i].buyIn, players[i].grossWin, customTip, actualWin, netWin);
+            fprintf(data, "%s,%.2f,%.2f,%.2f,%.2f,%.2f\n", players[i].name.c_str(), players[i].buyIn, players[i].grossWin, customTip, actualWin, netWin);
         } else {
             float dealerTip = roundDown(game.dealerTipPerc * players[i].grossWin, 2);
             game.dealerTotal += dealerTip;
             float actualWin = players[i].grossWin - dealerTip;
             float netWin = actualWin - players[i].buyIn;
-            fprintf(data, "%s,%.2f,%.2f,%.2f,%.2f,%.2f\n", players[i].name, players[i].buyIn, players[i].grossWin, dealerTip, actualWin, netWin);
+            fprintf(data, "%s,%.2f,%.2f,%.2f,%.2f,%.2f\n", players[i].name.c_str(), players[i].buyIn, players[i].grossWin, dealerTip, actualWin, netWin);
         }
     }
 
