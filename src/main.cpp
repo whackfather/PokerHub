@@ -28,7 +28,7 @@ vector<vector<string>> getNightInfo(string desiredDate, vector<vector<string>> c
         if (csvData[i][0] == desiredDate) {
             startKey = i;
             string playerNumStr = csvData[i][1];
-            playerNum = stof(playerNumStr);
+            playerNum = stoi(playerNumStr);
             break;
         }
     }
