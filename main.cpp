@@ -13,10 +13,8 @@
 #include "mainwindow.h"
 using namespace std;
 
+// Main function
 int main(int argc, char *argv[]) {
-    vector<vector<string>> csvData = readData("data.csv");
-    cout << getTotal(NET, "Andrew", csvData) << endl;
-
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
@@ -88,6 +86,8 @@ vector<vector<string>> readData(string filePath) {
 
 // Write new data to csv file
 void writeData() {
+    return; // SAFETY CATCH: Calling this function in its current state will depricate the csv file.
+    // Remove return statement when the code below becomes functional.
     gameInfo game;
     FILE *data;
     data = fopen("data.csv", "a");
