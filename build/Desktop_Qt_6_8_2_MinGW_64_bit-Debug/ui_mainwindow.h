@@ -13,12 +13,14 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QGridLayout>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTableWidget>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -27,7 +29,7 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QGridLayout *gridLayout;
     QLabel *label;
     QLineEdit *playerName;
@@ -35,6 +37,11 @@ public:
     QPushButton *infoGet;
     QLineEdit *txtResult;
     QComboBox *comboBox;
+    QPushButton *createTable;
+    QLineEdit *rowsOfTbl;
+    QLineEdit *colsOfTbl;
+    QTableWidget *tableWidget;
+    QPushButton *runCalcs;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -42,43 +49,43 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(593, 353);
+        MainWindow->resize(1115, 592);
         MainWindow->setMouseTracking(false);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
-        widget = new QWidget(centralwidget);
-        widget->setObjectName("widget");
-        widget->setGeometry(QRect(53, 40, 261, 131));
-        gridLayout = new QGridLayout(widget);
+        layoutWidget = new QWidget(centralwidget);
+        layoutWidget->setObjectName("layoutWidget");
+        layoutWidget->setGeometry(QRect(53, 40, 261, 131));
+        gridLayout = new QGridLayout(layoutWidget);
         gridLayout->setObjectName("gridLayout");
         gridLayout->setContentsMargins(0, 0, 0, 0);
-        label = new QLabel(widget);
+        label = new QLabel(layoutWidget);
         label->setObjectName("label");
 
         gridLayout->addWidget(label, 0, 0, 1, 1);
 
-        playerName = new QLineEdit(widget);
+        playerName = new QLineEdit(layoutWidget);
         playerName->setObjectName("playerName");
 
         gridLayout->addWidget(playerName, 0, 1, 1, 1);
 
-        label_2 = new QLabel(widget);
+        label_2 = new QLabel(layoutWidget);
         label_2->setObjectName("label_2");
 
         gridLayout->addWidget(label_2, 1, 0, 1, 1);
 
-        infoGet = new QPushButton(widget);
+        infoGet = new QPushButton(layoutWidget);
         infoGet->setObjectName("infoGet");
 
         gridLayout->addWidget(infoGet, 2, 0, 1, 2);
 
-        txtResult = new QLineEdit(widget);
+        txtResult = new QLineEdit(layoutWidget);
         txtResult->setObjectName("txtResult");
         txtResult->setReadOnly(true);
 
         gridLayout->addWidget(txtResult, 3, 0, 1, 2);
 
-        comboBox = new QComboBox(widget);
+        comboBox = new QComboBox(layoutWidget);
         comboBox->addItem(QString());
         comboBox->addItem(QString());
         comboBox->addItem(QString());
@@ -88,10 +95,26 @@ public:
 
         gridLayout->addWidget(comboBox, 1, 1, 1, 1);
 
+        createTable = new QPushButton(centralwidget);
+        createTable->setObjectName("createTable");
+        createTable->setGeometry(QRect(400, 50, 80, 24));
+        rowsOfTbl = new QLineEdit(centralwidget);
+        rowsOfTbl->setObjectName("rowsOfTbl");
+        rowsOfTbl->setGeometry(QRect(500, 50, 113, 24));
+        colsOfTbl = new QLineEdit(centralwidget);
+        colsOfTbl->setObjectName("colsOfTbl");
+        colsOfTbl->setGeometry(QRect(500, 80, 113, 24));
+        tableWidget = new QTableWidget(centralwidget);
+        tableWidget->setObjectName("tableWidget");
+        tableWidget->setGeometry(QRect(50, 190, 841, 341));
+        tableWidget->setColumnCount(0);
+        runCalcs = new QPushButton(centralwidget);
+        runCalcs->setObjectName("runCalcs");
+        runCalcs->setGeometry(QRect(550, 140, 80, 24));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 593, 21));
+        menubar->setGeometry(QRect(0, 0, 1115, 21));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -114,6 +137,8 @@ public:
         comboBox->setItemText(3, QCoreApplication::translate("MainWindow", "Post-tip", nullptr));
         comboBox->setItemText(4, QCoreApplication::translate("MainWindow", "Net", nullptr));
 
+        createTable->setText(QCoreApplication::translate("MainWindow", "Create Table", nullptr));
+        runCalcs->setText(QCoreApplication::translate("MainWindow", "Calculate", nullptr));
     } // retranslateUi
 
 };
