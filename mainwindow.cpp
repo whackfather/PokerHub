@@ -14,8 +14,7 @@ MainWindow::~MainWindow() {
 void MainWindow::on_infoGet_clicked() {
     vector<vector<string>> info = readData("data.csv");
     string playerName = ui->playerName->text().toStdString();
-    float var = ui->comboBox->currentIndex() + 1;
-    columns desired = static_cast<columns>(var);
-    float total = getTotal(desired, playerName, info);
+    columns desiredStat = static_cast<columns>(ui->comboBox->currentIndex() + 1);
+    float total = getTotal(desiredStat, playerName, info);
     ui->txtResult->setText(QString::number(total, 'f', 2));
 }
