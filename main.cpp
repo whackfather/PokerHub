@@ -87,7 +87,7 @@ vector<vector<string>> readData(string filePath) {
 
 // Write new data to csv file
 void writeData() {
-    return; // SAFETY CATCH: Calling this function in its current state will depricate the csv file.
+    return; // WARNING: Calling this function in its current state will depricate the csv file.
     // Remove return statement when the code below becomes functional.
     gameInfo game;
     FILE *data;
