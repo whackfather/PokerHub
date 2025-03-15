@@ -39,7 +39,6 @@ public:
     QComboBox *comboBox;
     QPushButton *createTable;
     QLineEdit *rowsOfTbl;
-    QLineEdit *colsOfTbl;
     QTableWidget *tableWidget;
     QPushButton *runCalcs;
     QMenuBar *menubar;
@@ -101,12 +100,9 @@ public:
         rowsOfTbl = new QLineEdit(centralwidget);
         rowsOfTbl->setObjectName("rowsOfTbl");
         rowsOfTbl->setGeometry(QRect(500, 50, 113, 24));
-        colsOfTbl = new QLineEdit(centralwidget);
-        colsOfTbl->setObjectName("colsOfTbl");
-        colsOfTbl->setGeometry(QRect(500, 80, 113, 24));
         tableWidget = new QTableWidget(centralwidget);
         tableWidget->setObjectName("tableWidget");
-        tableWidget->setGeometry(QRect(50, 190, 841, 341));
+        tableWidget->setGeometry(QRect(50, 190, 631, 341));
         tableWidget->setColumnCount(0);
         runCalcs = new QPushButton(centralwidget);
         runCalcs->setObjectName("runCalcs");
