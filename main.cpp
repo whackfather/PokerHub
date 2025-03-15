@@ -8,6 +8,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include <string>
 #include <QApplication>
 #include "main.h"
 #include "mainwindow.h"

@@ -17,13 +17,7 @@ class MainWindow : public QMainWindow {
         ~MainWindow();
 
     private slots:
-        void on_btnAdd_clicked();
-
-        void on_btnSub_clicked();
-
-        void on_btnMult_clicked();
-
-        void on_btnDiv_clicked();
+        void on_infoGet_clicked();
 
     private:
     Ui::MainWindow *ui;

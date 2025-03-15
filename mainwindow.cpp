@@ -1,3 +1,5 @@
+#include <vector>
+#include "main.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -9,32 +11,11 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-int firstNum, secondNum, result;
-
-void MainWindow::on_btnAdd_clicked() {
-    firstNum = ui->txtFirstNum->text().toInt();
-    secondNum = ui->txtSecondNum->text().toInt();
-    result = firstNum + secondNum;
-    ui->txtResult->setText(QString::number(result));
-}
-
-void MainWindow::on_btnSub_clicked(){
-    firstNum = ui->txtFirstNum->text().toInt();
-    secondNum = ui->txtSecondNum->text().toInt();
-    result = firstNum - secondNum;
-    ui->txtResult->setText(QString::number(result));
-}
-
-void MainWindow::on_btnMult_clicked() {
-    firstNum = ui->txtFirstNum->text().toInt();
-    secondNum = ui->txtSecondNum->text().toInt();
-    result = firstNum * secondNum;
-    ui->txtResult->setText(QString::number(result));
-}
-
-void MainWindow::on_btnDiv_clicked() {
-    firstNum = ui->txtFirstNum->text().toInt();
-    secondNum = ui->txtSecondNum->text().toInt();
-    result = firstNum / secondNum;
-    ui->txtResult->setText(QString::number(result));
+void MainWindow::on_infoGet_clicked() {
+    vector<vector<string>> info = readData("data.csv");
+    string playerName = ui->playerName->text().toStdString();
+    float var = ui->comboBox->currentIndex() + 1;
+    columns desired = static_cast<columns>(var);
+    float total = getTotal(desired, playerName, info);
+    ui->txtResult->setText(QString::number(total, 'f', 2));
 }

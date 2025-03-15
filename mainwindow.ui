@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>450</width>
-    <height>267</height>
+    <width>593</width>
+    <height>353</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -17,96 +17,74 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>53</x>
       <y>40</y>
-      <width>342</width>
-      <height>90</height>
+      <width>261</width>
+      <height>131</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout_3">
+    <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>First Number:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="txtFirstNum"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Second Number:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="txtSecondNum"/>
-       </item>
-      </layout>
-     </item>
-     <item row="1" column="0">
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0">
-        <widget class="QPushButton" name="btnAdd">
-         <property name="text">
-          <string>+</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="btnSub">
-         <property name="text">
-          <string>-</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QPushButton" name="btnMult">
-         <property name="text">
-          <string>*</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <widget class="QPushButton" name="btnDiv">
-         <property name="text">
-          <string>/</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>160</y>
-      <width>151</width>
-      <height>26</height>
-     </rect>
-    </property>
-    <layout class="QFormLayout" name="formLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="label">
        <property name="text">
-        <string>Result:</string>
+        <string>Player Name:</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
+      <widget class="QLineEdit" name="playerName"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Desired Stat:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0" colspan="2">
+      <widget class="QPushButton" name="infoGet">
+       <property name="text">
+        <string>Get Info</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0" colspan="2">
       <widget class="QLineEdit" name="txtResult">
        <property name="readOnly">
         <bool>true</bool>
        </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="comboBox">
+       <item>
+        <property name="text">
+         <string>Buy-In</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Gross Winnings</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Tip</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Post-tip</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Net</string>
+        </property>
+       </item>
       </widget>
      </item>
     </layout>
@@ -117,7 +95,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>450</width>
+     <width>593</width>
      <height>21</height>
     </rect>
    </property>
