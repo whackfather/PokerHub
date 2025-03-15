@@ -27,7 +27,6 @@ void MainWindow::on_createTable_clicked() {
     ui->tableWidget->setHorizontalHeaderLabels({"Name", "Buy-In", "Gross Winnings", "Tip (Blank for 5%)", "Post Tip", "Net Winnings"});
 }
 
-
 void MainWindow::on_runCalcs_clicked() {
     float buyIn = ui->tableWidget->item(0, 1)->text().toFloat();
     float grossWin = ui->tableWidget->item(0, 2)->text().toFloat();
