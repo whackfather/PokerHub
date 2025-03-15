@@ -19,6 +19,10 @@ class MainWindow : public QMainWindow {
     private slots:
         void on_infoGet_clicked();
 
+        void on_createTable_clicked();
+
+        void on_runCalcs_clicked();
+
     private:
     Ui::MainWindow *ui;
 };
