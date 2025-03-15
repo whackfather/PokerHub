@@ -31,5 +31,5 @@ void MainWindow::on_runCalcs_clicked() {
     float buyIn = ui->tableWidget->item(0, 1)->text().toFloat();
     float grossWin = ui->tableWidget->item(0, 2)->text().toFloat();
     float netWin = grossWin - buyIn;
-    ui->tableWidget->setItem(0, 5, new QTableWidgetItem(netWin));
+    ui->tableWidget->setItem(0, 5, new QTableWidgetItem(QString::number(netWin, 'f', 2)));
 }
