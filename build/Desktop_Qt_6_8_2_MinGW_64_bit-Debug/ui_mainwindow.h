@@ -11,7 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QFormLayout>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
@@ -27,22 +27,14 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QWidget *layoutWidget;
-    QGridLayout *gridLayout_3;
+    QWidget *widget;
     QGridLayout *gridLayout;
     QLabel *label;
-    QLineEdit *txtFirstNum;
+    QLineEdit *playerName;
     QLabel *label_2;
-    QLineEdit *txtSecondNum;
-    QGridLayout *gridLayout_2;
-    QPushButton *btnAdd;
-    QPushButton *btnSub;
-    QPushButton *btnMult;
-    QPushButton *btnDiv;
-    QWidget *layoutWidget1;
-    QFormLayout *formLayout;
-    QLabel *label_3;
+    QPushButton *infoGet;
     QLineEdit *txtResult;
+    QComboBox *comboBox;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -50,87 +42,56 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(450, 267);
+        MainWindow->resize(593, 353);
         MainWindow->setMouseTracking(false);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
-        layoutWidget = new QWidget(centralwidget);
-        layoutWidget->setObjectName("layoutWidget");
-        layoutWidget->setGeometry(QRect(50, 40, 342, 90));
-        gridLayout_3 = new QGridLayout(layoutWidget);
-        gridLayout_3->setObjectName("gridLayout_3");
-        gridLayout_3->setContentsMargins(0, 0, 0, 0);
-        gridLayout = new QGridLayout();
+        widget = new QWidget(centralwidget);
+        widget->setObjectName("widget");
+        widget->setGeometry(QRect(53, 40, 261, 131));
+        gridLayout = new QGridLayout(widget);
         gridLayout->setObjectName("gridLayout");
-        label = new QLabel(layoutWidget);
+        gridLayout->setContentsMargins(0, 0, 0, 0);
+        label = new QLabel(widget);
         label->setObjectName("label");
 
         gridLayout->addWidget(label, 0, 0, 1, 1);
 
-        txtFirstNum = new QLineEdit(layoutWidget);
-        txtFirstNum->setObjectName("txtFirstNum");
+        playerName = new QLineEdit(widget);
+        playerName->setObjectName("playerName");
 
-        gridLayout->addWidget(txtFirstNum, 0, 1, 1, 1);
+        gridLayout->addWidget(playerName, 0, 1, 1, 1);
 
-        label_2 = new QLabel(layoutWidget);
+        label_2 = new QLabel(widget);
         label_2->setObjectName("label_2");
 
         gridLayout->addWidget(label_2, 1, 0, 1, 1);
 
-        txtSecondNum = new QLineEdit(layoutWidget);
-        txtSecondNum->setObjectName("txtSecondNum");
+        infoGet = new QPushButton(widget);
+        infoGet->setObjectName("infoGet");
 
-        gridLayout->addWidget(txtSecondNum, 1, 1, 1, 1);
+        gridLayout->addWidget(infoGet, 2, 0, 1, 2);
 
-
-        gridLayout_3->addLayout(gridLayout, 0, 0, 1, 1);
-
-        gridLayout_2 = new QGridLayout();
-        gridLayout_2->setObjectName("gridLayout_2");
-        btnAdd = new QPushButton(layoutWidget);
-        btnAdd->setObjectName("btnAdd");
-
-        gridLayout_2->addWidget(btnAdd, 0, 0, 1, 1);
-
-        btnSub = new QPushButton(layoutWidget);
-        btnSub->setObjectName("btnSub");
-
-        gridLayout_2->addWidget(btnSub, 0, 1, 1, 1);
-
-        btnMult = new QPushButton(layoutWidget);
-        btnMult->setObjectName("btnMult");
-
-        gridLayout_2->addWidget(btnMult, 0, 2, 1, 1);
-
-        btnDiv = new QPushButton(layoutWidget);
-        btnDiv->setObjectName("btnDiv");
-
-        gridLayout_2->addWidget(btnDiv, 0, 3, 1, 1);
-
-
-        gridLayout_3->addLayout(gridLayout_2, 1, 0, 1, 1);
-
-        layoutWidget1 = new QWidget(centralwidget);
-        layoutWidget1->setObjectName("layoutWidget1");
-        layoutWidget1->setGeometry(QRect(60, 160, 151, 26));
-        formLayout = new QFormLayout(layoutWidget1);
-        formLayout->setObjectName("formLayout");
-        formLayout->setContentsMargins(0, 0, 0, 0);
-        label_3 = new QLabel(layoutWidget1);
-        label_3->setObjectName("label_3");
-
-        formLayout->setWidget(0, QFormLayout::LabelRole, label_3);
-
-        txtResult = new QLineEdit(layoutWidget1);
+        txtResult = new QLineEdit(widget);
         txtResult->setObjectName("txtResult");
         txtResult->setReadOnly(true);
 
-        formLayout->setWidget(0, QFormLayout::FieldRole, txtResult);
+        gridLayout->addWidget(txtResult, 3, 0, 1, 2);
+
+        comboBox = new QComboBox(widget);
+        comboBox->addItem(QString());
+        comboBox->addItem(QString());
+        comboBox->addItem(QString());
+        comboBox->addItem(QString());
+        comboBox->addItem(QString());
+        comboBox->setObjectName("comboBox");
+
+        gridLayout->addWidget(comboBox, 1, 1, 1, 1);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 450, 21));
+        menubar->setGeometry(QRect(0, 0, 593, 21));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -144,13 +105,15 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        label->setText(QCoreApplication::translate("MainWindow", "First Number:", nullptr));
-        label_2->setText(QCoreApplication::translate("MainWindow", "Second Number:", nullptr));
-        btnAdd->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
-        btnSub->setText(QCoreApplication::translate("MainWindow", "-", nullptr));
-        btnMult->setText(QCoreApplication::translate("MainWindow", "*", nullptr));
-        btnDiv->setText(QCoreApplication::translate("MainWindow", "/", nullptr));
-        label_3->setText(QCoreApplication::translate("MainWindow", "Result:", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "Player Name:", nullptr));
+        label_2->setText(QCoreApplication::translate("MainWindow", "Desired Stat:", nullptr));
+        infoGet->setText(QCoreApplication::translate("MainWindow", "Get Info", nullptr));
+        comboBox->setItemText(0, QCoreApplication::translate("MainWindow", "Buy-In", nullptr));
+        comboBox->setItemText(1, QCoreApplication::translate("MainWindow", "Gross Winnings", nullptr));
+        comboBox->setItemText(2, QCoreApplication::translate("MainWindow", "Tip", nullptr));
+        comboBox->setItemText(3, QCoreApplication::translate("MainWindow", "Post-tip", nullptr));
+        comboBox->setItemText(4, QCoreApplication::translate("MainWindow", "Net", nullptr));
+
     } // retranslateUi
 
 };
