@@ -14,6 +14,7 @@
 #include "mainwindow.h"
 using namespace std;
 
+// Test function
 // Main function
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
