@@ -53,5 +53,4 @@ vector<string> split(const string&, char);
 float roundUp(float, int);
 float roundDown(float, int);
 
-
 #endif // MAIN_H
