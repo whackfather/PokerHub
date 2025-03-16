@@ -2,12 +2,14 @@
 // Written by Roman Rodriguez
 
 // Include statements
+#include <iostream>
 #include <cmath>
 #include <cstdio>
 #include <vector>
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <algorithm>
 #include <QApplication>
 #include "main.h"
 #include "mainwindow.h"
@@ -17,13 +19,32 @@ using namespace std;
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     MainWindow w;
+    w.setFixedSize(700, 535);
     w.setWindowTitle("PokerHub");
     w.show();
     return a.exec();
+    return 0;
+}
+
+// Get list of all players ever.
+vector<string> getPlayerNameList() {
+    vector<vector<string>> csvData = readData("data.csv");
+    vector<string> playerList;
+
+    for (int i = 0; i < int(csvData.size()); i++) {
+        if (!isOnlyDigits(csvData[i][0]) && csvData[i][0] != "TOTAL" && csvData[i][0] != "END") {
+            if (find(playerList.begin(), playerList.end(), csvData[i][0]) == playerList.end()) {
+                playerList.push_back(csvData[i][0]);
+            }
+        }
+    }
+
+    return playerList;
 }
 
 // Get totals for one person (or TOTAL)
-float getTotal(columns column, string name, vector<vector<string>> csvData) {
+float getTotal(columns column, string name) {
+    vector<vector<string>> csvData = readData("data.csv");
     float total = 0.0;
     vector<vector<string>> target = getPlayerInfo(name, csvData);
 
@@ -83,6 +104,11 @@ vector<vector<string>> readData(string filePath) {
 
     file.close();
     return data;
+}
+
+// Check if a string only contains digits
+bool isOnlyDigits(const string& str) {
+    return !str.empty() && all_of(str.begin(), str.end(), ::isdigit);
 }
 
 // Round up a number to a given number of decimals
