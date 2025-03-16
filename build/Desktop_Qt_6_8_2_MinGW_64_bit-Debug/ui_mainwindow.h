@@ -11,7 +11,6 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QComboBox>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
@@ -21,6 +20,7 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QWidget>
 
@@ -30,28 +30,30 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
+    QTabWidget *tabWidget;
+    QWidget *tabNewGame;
     QWidget *layoutWidget;
-    QGridLayout *gridLayout;
-    QLabel *lblPlayerName;
-    QLineEdit *playerName;
-    QLabel *lblDesiredStat;
-    QPushButton *infoGet;
-    QLineEdit *txtResult;
-    QComboBox *drpStats;
-    QTableWidget *tblInputStats;
-    QLabel *lblTotalStats;
+    QFormLayout *formLayout;
+    QPushButton *saveGame;
+    QPushButton *deleteTable;
     QWidget *layoutWidget1;
     QGridLayout *gridLayout_2;
     QLabel *lblNumPlayers;
     QLineEdit *rowsOfTbl;
     QPushButton *createTable;
     QPushButton *runCalcs;
-    QLabel *lblDate;
+    QTableWidget *tblInputStats;
     QLineEdit *dateOfPlay;
+    QLabel *lblDate;
+    QWidget *tabTotalStats;
+    QTableWidget *tblLifetime;
+    QWidget *tabGetNightInfo;
+    QTableWidget *tblNightInfo;
     QWidget *widget;
-    QFormLayout *formLayout;
-    QPushButton *saveGame;
-    QPushButton *deleteTable;
+    QGridLayout *gridLayout_3;
+    QLabel *lblDateOfPlay;
+    QLineEdit *getDoP;
+    QPushButton *btnNightInfo;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -59,62 +61,35 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(944, 493);
+        MainWindow->resize(696, 532);
         MainWindow->setMouseTracking(false);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
-        layoutWidget = new QWidget(centralwidget);
+        tabWidget = new QTabWidget(centralwidget);
+        tabWidget->setObjectName("tabWidget");
+        tabWidget->setGeometry(QRect(0, 0, 1041, 561));
+        tabNewGame = new QWidget();
+        tabNewGame->setObjectName("tabNewGame");
+        tabNewGame->setEnabled(true);
+        layoutWidget = new QWidget(tabNewGame);
         layoutWidget->setObjectName("layoutWidget");
-        layoutWidget->setGeometry(QRect(660, 60, 261, 131));
-        gridLayout = new QGridLayout(layoutWidget);
-        gridLayout->setObjectName("gridLayout");
-        gridLayout->setContentsMargins(0, 0, 0, 0);
-        lblPlayerName = new QLabel(layoutWidget);
-        lblPlayerName->setObjectName("lblPlayerName");
+        layoutWidget->setGeometry(QRect(10, 413, 168, 26));
+        formLayout = new QFormLayout(layoutWidget);
+        formLayout->setObjectName("formLayout");
+        formLayout->setContentsMargins(0, 0, 0, 0);
+        saveGame = new QPushButton(layoutWidget);
+        saveGame->setObjectName("saveGame");
 
-        gridLayout->addWidget(lblPlayerName, 0, 0, 1, 1);
+        formLayout->setWidget(0, QFormLayout::LabelRole, saveGame);
 
-        playerName = new QLineEdit(layoutWidget);
-        playerName->setObjectName("playerName");
+        deleteTable = new QPushButton(layoutWidget);
+        deleteTable->setObjectName("deleteTable");
 
-        gridLayout->addWidget(playerName, 0, 1, 1, 1);
+        formLayout->setWidget(0, QFormLayout::FieldRole, deleteTable);
 
-        lblDesiredStat = new QLabel(layoutWidget);
-        lblDesiredStat->setObjectName("lblDesiredStat");
-
-        gridLayout->addWidget(lblDesiredStat, 1, 0, 1, 1);
-
-        infoGet = new QPushButton(layoutWidget);
-        infoGet->setObjectName("infoGet");
-
-        gridLayout->addWidget(infoGet, 2, 0, 1, 2);
-
-        txtResult = new QLineEdit(layoutWidget);
-        txtResult->setObjectName("txtResult");
-        txtResult->setReadOnly(true);
-
-        gridLayout->addWidget(txtResult, 3, 0, 1, 2);
-
-        drpStats = new QComboBox(layoutWidget);
-        drpStats->addItem(QString());
-        drpStats->addItem(QString());
-        drpStats->addItem(QString());
-        drpStats->addItem(QString());
-        drpStats->addItem(QString());
-        drpStats->setObjectName("drpStats");
-
-        gridLayout->addWidget(drpStats, 1, 1, 1, 1);
-
-        tblInputStats = new QTableWidget(centralwidget);
-        tblInputStats->setObjectName("tblInputStats");
-        tblInputStats->setGeometry(QRect(10, 60, 631, 341));
-        tblInputStats->setColumnCount(0);
-        lblTotalStats = new QLabel(centralwidget);
-        lblTotalStats->setObjectName("lblTotalStats");
-        lblTotalStats->setGeometry(QRect(688, 30, 121, 20));
-        layoutWidget1 = new QWidget(centralwidget);
+        layoutWidget1 = new QWidget(tabNewGame);
         layoutWidget1->setObjectName("layoutWidget1");
-        layoutWidget1->setGeometry(QRect(10, 10, 282, 48));
+        layoutWidget1->setGeometry(QRect(10, 12, 282, 48));
         gridLayout_2 = new QGridLayout(layoutWidget1);
         gridLayout_2->setObjectName("gridLayout_2");
         gridLayout_2->setContentsMargins(0, 0, 0, 0);
@@ -139,33 +114,56 @@ public:
 
         gridLayout_2->addWidget(runCalcs, 1, 2, 1, 1);
 
-        lblDate = new QLabel(centralwidget);
-        lblDate->setObjectName("lblDate");
-        lblDate->setGeometry(QRect(530, 8, 108, 16));
-        lblDate->setAlignment(Qt::AlignmentFlag::AlignCenter);
-        dateOfPlay = new QLineEdit(centralwidget);
+        tblInputStats = new QTableWidget(tabNewGame);
+        tblInputStats->setObjectName("tblInputStats");
+        tblInputStats->setGeometry(QRect(10, 63, 631, 341));
+        tblInputStats->setColumnCount(0);
+        dateOfPlay = new QLineEdit(tabNewGame);
         dateOfPlay->setObjectName("dateOfPlay");
-        dateOfPlay->setGeometry(QRect(530, 30, 108, 24));
-        widget = new QWidget(centralwidget);
+        dateOfPlay->setGeometry(QRect(530, 33, 108, 24));
+        lblDate = new QLabel(tabNewGame);
+        lblDate->setObjectName("lblDate");
+        lblDate->setGeometry(QRect(530, 10, 108, 16));
+        lblDate->setAlignment(Qt::AlignmentFlag::AlignCenter);
+        tabWidget->addTab(tabNewGame, QString());
+        tabTotalStats = new QWidget();
+        tabTotalStats->setObjectName("tabTotalStats");
+        tblLifetime = new QTableWidget(tabTotalStats);
+        tblLifetime->setObjectName("tblLifetime");
+        tblLifetime->setGeometry(QRect(10, 20, 671, 431));
+        tabWidget->addTab(tabTotalStats, QString());
+        tabGetNightInfo = new QWidget();
+        tabGetNightInfo->setObjectName("tabGetNightInfo");
+        tblNightInfo = new QTableWidget(tabGetNightInfo);
+        tblNightInfo->setObjectName("tblNightInfo");
+        tblNightInfo->setGeometry(QRect(10, 70, 651, 381));
+        widget = new QWidget(tabGetNightInfo);
         widget->setObjectName("widget");
-        widget->setGeometry(QRect(10, 410, 168, 26));
-        formLayout = new QFormLayout(widget);
-        formLayout->setObjectName("formLayout");
-        formLayout->setContentsMargins(0, 0, 0, 0);
-        saveGame = new QPushButton(widget);
-        saveGame->setObjectName("saveGame");
+        widget->setGeometry(QRect(10, 20, 227, 48));
+        gridLayout_3 = new QGridLayout(widget);
+        gridLayout_3->setObjectName("gridLayout_3");
+        gridLayout_3->setContentsMargins(0, 0, 0, 0);
+        lblDateOfPlay = new QLabel(widget);
+        lblDateOfPlay->setObjectName("lblDateOfPlay");
+        lblDateOfPlay->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
-        formLayout->setWidget(0, QFormLayout::LabelRole, saveGame);
+        gridLayout_3->addWidget(lblDateOfPlay, 0, 0, 1, 1);
 
-        deleteTable = new QPushButton(widget);
-        deleteTable->setObjectName("deleteTable");
+        getDoP = new QLineEdit(widget);
+        getDoP->setObjectName("getDoP");
 
-        formLayout->setWidget(0, QFormLayout::FieldRole, deleteTable);
+        gridLayout_3->addWidget(getDoP, 1, 0, 1, 1);
 
+        btnNightInfo = new QPushButton(widget);
+        btnNightInfo->setObjectName("btnNightInfo");
+
+        gridLayout_3->addWidget(btnNightInfo, 1, 1, 1, 1);
+
+        tabWidget->addTab(tabGetNightInfo, QString());
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 944, 21));
+        menubar->setGeometry(QRect(0, 0, 696, 21));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -173,28 +171,26 @@ public:
 
         retranslateUi(MainWindow);
 
+        tabWidget->setCurrentIndex(1);
+
+
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
 
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        lblPlayerName->setText(QCoreApplication::translate("MainWindow", "Player Name:", nullptr));
-        lblDesiredStat->setText(QCoreApplication::translate("MainWindow", "Desired Stat:", nullptr));
-        infoGet->setText(QCoreApplication::translate("MainWindow", "Get Info", nullptr));
-        drpStats->setItemText(0, QCoreApplication::translate("MainWindow", "Buy-In", nullptr));
-        drpStats->setItemText(1, QCoreApplication::translate("MainWindow", "Gross Winnings", nullptr));
-        drpStats->setItemText(2, QCoreApplication::translate("MainWindow", "Tip", nullptr));
-        drpStats->setItemText(3, QCoreApplication::translate("MainWindow", "Post-tip", nullptr));
-        drpStats->setItemText(4, QCoreApplication::translate("MainWindow", "Net", nullptr));
-
-        lblTotalStats->setText(QCoreApplication::translate("MainWindow", "Get total stats:", nullptr));
+        saveGame->setText(QCoreApplication::translate("MainWindow", "Save Game", nullptr));
+        deleteTable->setText(QCoreApplication::translate("MainWindow", "Delete Table", nullptr));
         lblNumPlayers->setText(QCoreApplication::translate("MainWindow", "Number of Players:", nullptr));
         createTable->setText(QCoreApplication::translate("MainWindow", "Create Table", nullptr));
         runCalcs->setText(QCoreApplication::translate("MainWindow", "Calculate", nullptr));
         lblDate->setText(QCoreApplication::translate("MainWindow", "Date (MMDDYY):", nullptr));
-        saveGame->setText(QCoreApplication::translate("MainWindow", "Save Game", nullptr));
-        deleteTable->setText(QCoreApplication::translate("MainWindow", "Delete Table", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tabNewGame), QCoreApplication::translate("MainWindow", "New Game", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tabTotalStats), QCoreApplication::translate("MainWindow", "Total Stats", nullptr));
+        lblDateOfPlay->setText(QCoreApplication::translate("MainWindow", "Date of Play (MMDDYY): ", nullptr));
+        btnNightInfo->setText(QCoreApplication::translate("MainWindow", "Get Night Info", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tabGetNightInfo), QCoreApplication::translate("MainWindow", "Get Night Info", nullptr));
     } // retranslateUi
 
 };
