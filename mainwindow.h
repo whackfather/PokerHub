@@ -23,6 +23,10 @@ class MainWindow : public QMainWindow {
 
         void on_runCalcs_clicked();
 
+        void on_deleteTable_clicked();
+
+        void on_saveGame_clicked();
+
     private:
     Ui::MainWindow *ui;
 };
