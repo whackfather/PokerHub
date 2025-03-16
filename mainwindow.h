@@ -17,8 +17,6 @@ class MainWindow : public QMainWindow {
         ~MainWindow();
 
     private slots:
-        void on_infoGet_clicked();
-
         void on_createTable_clicked();
 
         void on_runCalcs_clicked();
@@ -26,6 +24,10 @@ class MainWindow : public QMainWindow {
         void on_deleteTable_clicked();
 
         void on_saveGame_clicked();
+
+        void on_btnNightInfo_clicked();
+
+        void on_tabWidget_tabBarClicked(int index);
 
     private:
     Ui::MainWindow *ui;

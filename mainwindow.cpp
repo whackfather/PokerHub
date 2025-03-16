@@ -15,21 +15,18 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::on_infoGet_clicked() {
-    vector<vector<string>> info = readData("data.csv");
-    string playerName = ui->playerName->text().toStdString();
-    columns desiredStat = static_cast<columns>(ui->drpStats->currentIndex() + 1);
-    float total = getTotal(desiredStat, playerName, info);
-    ui->txtResult->setText(QString::number(total, 'f', 2));
-}
-
 void MainWindow::on_createTable_clicked() {
     int rows = ui->rowsOfTbl->text().toInt();
     int cols = 6;
     ui->tblInputStats->setRowCount(rows + 1);
     ui->tblInputStats->setColumnCount(cols);
-    ui->tblInputStats->setHorizontalHeaderLabels({"Name", "Buy-In", "Gross Winnings", "Tip (Blank for 5%)", "Post Tip", "Net Winnings"});
-    ui->tblInputStats->setColumnWidth(3, 110 );
+    ui->tblInputStats->setHorizontalHeaderLabels({"Name",
+                                                  "Buy-In",
+                                                  "Gross Winnings",
+                                                  "Tip (Blank for 5%)",
+                                                  "Post Tip",
+                                                  "Net Winnings"});
+    ui->tblInputStats->setColumnWidth(3, 110);
     ui->tblInputStats->setItem(rows, 0, new QTableWidgetItem(QString("TOTAL")));
 }
 
@@ -96,4 +93,48 @@ void MainWindow::on_saveGame_clicked() {
     fprintf(data, "END,0,0,0,0,0\n");
 
     fclose(data);
+}
+
+void MainWindow::on_btnNightInfo_clicked() {
+    string desiredDate = ui->getDoP->text().toStdString();
+    vector<vector<string>> csvData = readData("data.csv");
+    vector<vector<string>> nightInfo = getNightInfo(desiredDate, csvData);
+    int rows = nightInfo.size() - 1;
+    int cols = nightInfo[0].size();
+    ui->tblNightInfo->setRowCount(rows);
+    ui->tblNightInfo->setColumnCount(cols);
+
+    for (int i = 1; i <= rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            ui->tblNightInfo->setItem(i - 1, j, new QTableWidgetItem(QString(nightInfo[i][j].c_str())));
+        }
+    }
+}
+
+
+void MainWindow::on_tabWidget_tabBarClicked(int index) {
+    if (index == 1) {
+        vector<string> playerList = getPlayerNameList();
+        int rows = int(playerList.size());
+        int cols = 6;
+        ui->tblLifetime->setRowCount(rows + 1);
+        ui->tblLifetime->setColumnCount(cols);
+        ui->tblLifetime->setHorizontalHeaderLabels({"Name",
+                                                    "Buy-In",
+                                                    "Gross Winnings",
+                                                    "Tip",
+                                                    "Post Tip",
+                                                    "Net Winnings"});
+        for (int i = 0; i < rows; i++) {
+            string playerName = playerList[i];
+            ui->tblLifetime->setItem(i, 0, new QTableWidgetItem(QString(playerName.c_str())));
+            for (int j = 1; j < 6; j++) {
+                ui->tblLifetime->setItem(i, j, new QTableWidgetItem(QString::number(getTotal(columns(j), playerName), 'f', 2)));
+            }
+        }
+        ui->tblLifetime->setItem(rows, 0, new QTableWidgetItem(QString("TOTAL")));
+        for (int i = 1; i < 6; i++) {
+            ui->tblLifetime->setItem(rows, i, new QTableWidgetItem(QString::number(getTotal(columns(i), "TOTAL"), 'f', 2)));
+        }
+    }
 }
