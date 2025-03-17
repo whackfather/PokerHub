@@ -117,6 +117,7 @@ void MainWindow::on_tabWidget_tabBarClicked(int index) {
         vector<string> playerList = getPlayerNameList();
         int rows = int(playerList.size());
         int cols = 6;
+
         ui->tblLifetime->setRowCount(rows + 1);
         ui->tblLifetime->setColumnCount(cols);
         ui->tblLifetime->setHorizontalHeaderLabels({"Name",
@@ -125,6 +126,7 @@ void MainWindow::on_tabWidget_tabBarClicked(int index) {
                                                     "Tip",
                                                     "Post Tip",
                                                     "Net Winnings"});
+
         for (int i = 0; i < rows; i++) {
             string playerName = playerList[i];
             ui->tblLifetime->setItem(i, 0, new QTableWidgetItem(QString(playerName.c_str())));
@@ -132,6 +134,7 @@ void MainWindow::on_tabWidget_tabBarClicked(int index) {
                 ui->tblLifetime->setItem(i, j, new QTableWidgetItem(QString::number(getTotal(columns(j), playerName), 'f', 2)));
             }
         }
+
         ui->tblLifetime->setItem(rows, 0, new QTableWidgetItem(QString("TOTAL")));
         for (int i = 1; i < 6; i++) {
             ui->tblLifetime->setItem(rows, i, new QTableWidgetItem(QString::number(getTotal(columns(i), "TOTAL"), 'f', 2)));
