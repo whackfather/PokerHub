@@ -2,7 +2,6 @@
 // Written by Roman Rodriguez
 
 // Include statements
-#include <iostream>
 #include <cmath>
 #include <cstdio>
 #include <vector>
