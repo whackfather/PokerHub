@@ -10,6 +10,7 @@
 #include <string>
 #include <algorithm>
 #include <QApplication>
+#include <QIcon>
 #include "main.h"
 #include "mainwindow.h"
 using namespace std;
@@ -18,6 +19,7 @@ using namespace std;
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     MainWindow w;
+    w.setWindowIcon(QIcon("icon.ico"));
     w.setFixedSize(700, 535);
     w.setWindowTitle("PokerHub");
     w.show();
