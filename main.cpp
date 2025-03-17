@@ -19,7 +19,7 @@ using namespace std;
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     MainWindow w;
-    w.setWindowIcon(QIcon("icon.ico"));
+    w.setWindowIcon(QIcon("icon.png"));
     w.setFixedSize(700, 535);
     w.setWindowTitle("PokerHub");
     w.show();
