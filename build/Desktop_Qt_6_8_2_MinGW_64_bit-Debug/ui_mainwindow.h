@@ -49,7 +49,7 @@ public:
     QTableWidget *tblLifetime;
     QWidget *tabGetNightInfo;
     QTableWidget *tblNightInfo;
-    QWidget *widget;
+    QWidget *layoutWidget2;
     QGridLayout *gridLayout_3;
     QLabel *lblDateOfPlay;
     QLineEdit *getDoP;
@@ -137,24 +137,24 @@ public:
         tblNightInfo = new QTableWidget(tabGetNightInfo);
         tblNightInfo->setObjectName("tblNightInfo");
         tblNightInfo->setGeometry(QRect(10, 70, 651, 381));
-        widget = new QWidget(tabGetNightInfo);
-        widget->setObjectName("widget");
-        widget->setGeometry(QRect(10, 20, 227, 48));
-        gridLayout_3 = new QGridLayout(widget);
+        layoutWidget2 = new QWidget(tabGetNightInfo);
+        layoutWidget2->setObjectName("layoutWidget2");
+        layoutWidget2->setGeometry(QRect(10, 20, 227, 48));
+        gridLayout_3 = new QGridLayout(layoutWidget2);
         gridLayout_3->setObjectName("gridLayout_3");
         gridLayout_3->setContentsMargins(0, 0, 0, 0);
-        lblDateOfPlay = new QLabel(widget);
+        lblDateOfPlay = new QLabel(layoutWidget2);
         lblDateOfPlay->setObjectName("lblDateOfPlay");
         lblDateOfPlay->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         gridLayout_3->addWidget(lblDateOfPlay, 0, 0, 1, 1);
 
-        getDoP = new QLineEdit(widget);
+        getDoP = new QLineEdit(layoutWidget2);
         getDoP->setObjectName("getDoP");
 
         gridLayout_3->addWidget(getDoP, 1, 0, 1, 1);
 
-        btnNightInfo = new QPushButton(widget);
+        btnNightInfo = new QPushButton(layoutWidget2);
         btnNightInfo->setObjectName("btnNightInfo");
 
         gridLayout_3->addWidget(btnNightInfo, 1, 1, 1, 1);
@@ -171,7 +171,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
