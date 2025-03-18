@@ -11,11 +11,13 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QDateEdit>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -38,13 +40,14 @@ public:
     QPushButton *deleteTable;
     QWidget *layoutWidget1;
     QGridLayout *gridLayout_2;
-    QLabel *lblNumPlayers;
     QLineEdit *rowsOfTbl;
     QPushButton *createTable;
+    QLabel *lblNumPlayers;
     QPushButton *runCalcs;
     QTableWidget *tblInputStats;
-    QLineEdit *dateOfPlay;
     QLabel *lblDate;
+    QDateEdit *dateNewGame;
+    QPushButton *btnUseCrntDate;
     QWidget *tabTotalStats;
     QTableWidget *tblLifetime;
     QWidget *tabGetNightInfo;
@@ -52,8 +55,10 @@ public:
     QWidget *layoutWidget2;
     QGridLayout *gridLayout_3;
     QLabel *lblDateOfPlay;
-    QLineEdit *getDoP;
     QPushButton *btnNightInfo;
+    QDateEdit *getDate;
+    QListWidget *listNightsPlayed;
+    QLabel *lblNightsPlayed;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -61,7 +66,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(696, 532);
+        MainWindow->resize(756, 534);
         MainWindow->setMouseTracking(false);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
@@ -93,12 +98,6 @@ public:
         gridLayout_2 = new QGridLayout(layoutWidget1);
         gridLayout_2->setObjectName("gridLayout_2");
         gridLayout_2->setContentsMargins(0, 0, 0, 0);
-        lblNumPlayers = new QLabel(layoutWidget1);
-        lblNumPlayers->setObjectName("lblNumPlayers");
-        lblNumPlayers->setAlignment(Qt::AlignmentFlag::AlignCenter);
-
-        gridLayout_2->addWidget(lblNumPlayers, 0, 0, 1, 1);
-
         rowsOfTbl = new QLineEdit(layoutWidget1);
         rowsOfTbl->setObjectName("rowsOfTbl");
 
@@ -109,6 +108,12 @@ public:
 
         gridLayout_2->addWidget(createTable, 1, 1, 1, 1);
 
+        lblNumPlayers = new QLabel(layoutWidget1);
+        lblNumPlayers->setObjectName("lblNumPlayers");
+        lblNumPlayers->setAlignment(Qt::AlignmentFlag::AlignCenter);
+
+        gridLayout_2->addWidget(lblNumPlayers, 0, 0, 1, 1);
+
         runCalcs = new QPushButton(layoutWidget1);
         runCalcs->setObjectName("runCalcs");
 
@@ -116,30 +121,33 @@ public:
 
         tblInputStats = new QTableWidget(tabNewGame);
         tblInputStats->setObjectName("tblInputStats");
-        tblInputStats->setGeometry(QRect(10, 63, 631, 341));
+        tblInputStats->setGeometry(QRect(10, 63, 635, 341));
         tblInputStats->setColumnCount(0);
-        dateOfPlay = new QLineEdit(tabNewGame);
-        dateOfPlay->setObjectName("dateOfPlay");
-        dateOfPlay->setGeometry(QRect(530, 33, 108, 24));
         lblDate = new QLabel(tabNewGame);
         lblDate->setObjectName("lblDate");
-        lblDate->setGeometry(QRect(530, 10, 108, 16));
+        lblDate->setGeometry(QRect(535, 0, 110, 47));
         lblDate->setAlignment(Qt::AlignmentFlag::AlignCenter);
+        dateNewGame = new QDateEdit(tabNewGame);
+        dateNewGame->setObjectName("dateNewGame");
+        dateNewGame->setGeometry(QRect(535, 35, 110, 25));
+        btnUseCrntDate = new QPushButton(tabNewGame);
+        btnUseCrntDate->setObjectName("btnUseCrntDate");
+        btnUseCrntDate->setGeometry(QRect(430, 35, 101, 24));
         tabWidget->addTab(tabNewGame, QString());
         tabTotalStats = new QWidget();
         tabTotalStats->setObjectName("tabTotalStats");
         tblLifetime = new QTableWidget(tabTotalStats);
         tblLifetime->setObjectName("tblLifetime");
-        tblLifetime->setGeometry(QRect(10, 20, 671, 431));
+        tblLifetime->setGeometry(QRect(10, 10, 625, 431));
         tabWidget->addTab(tabTotalStats, QString());
         tabGetNightInfo = new QWidget();
         tabGetNightInfo->setObjectName("tabGetNightInfo");
         tblNightInfo = new QTableWidget(tabGetNightInfo);
         tblNightInfo->setObjectName("tblNightInfo");
-        tblNightInfo->setGeometry(QRect(10, 70, 651, 381));
+        tblNightInfo->setGeometry(QRect(10, 70, 625, 381));
         layoutWidget2 = new QWidget(tabGetNightInfo);
         layoutWidget2->setObjectName("layoutWidget2");
-        layoutWidget2->setGeometry(QRect(10, 20, 227, 48));
+        layoutWidget2->setGeometry(QRect(10, 20, 227, 49));
         gridLayout_3 = new QGridLayout(layoutWidget2);
         gridLayout_3->setObjectName("gridLayout_3");
         gridLayout_3->setContentsMargins(0, 0, 0, 0);
@@ -149,21 +157,29 @@ public:
 
         gridLayout_3->addWidget(lblDateOfPlay, 0, 0, 1, 1);
 
-        getDoP = new QLineEdit(layoutWidget2);
-        getDoP->setObjectName("getDoP");
-
-        gridLayout_3->addWidget(getDoP, 1, 0, 1, 1);
-
         btnNightInfo = new QPushButton(layoutWidget2);
         btnNightInfo->setObjectName("btnNightInfo");
 
         gridLayout_3->addWidget(btnNightInfo, 1, 1, 1, 1);
 
+        getDate = new QDateEdit(layoutWidget2);
+        getDate->setObjectName("getDate");
+        getDate->setButtonSymbols(QAbstractSpinBox::ButtonSymbols::NoButtons);
+
+        gridLayout_3->addWidget(getDate, 1, 0, 1, 1);
+
+        listNightsPlayed = new QListWidget(tabGetNightInfo);
+        listNightsPlayed->setObjectName("listNightsPlayed");
+        listNightsPlayed->setGeometry(QRect(650, 70, 81, 381));
+        lblNightsPlayed = new QLabel(tabGetNightInfo);
+        lblNightsPlayed->setObjectName("lblNightsPlayed");
+        lblNightsPlayed->setGeometry(QRect(650, 50, 81, 16));
+        lblNightsPlayed->setAlignment(Qt::AlignmentFlag::AlignCenter);
         tabWidget->addTab(tabGetNightInfo, QString());
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 696, 21));
+        menubar->setGeometry(QRect(0, 0, 756, 21));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -182,14 +198,16 @@ public:
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         saveGame->setText(QCoreApplication::translate("MainWindow", "Save Game", nullptr));
         deleteTable->setText(QCoreApplication::translate("MainWindow", "Delete Table", nullptr));
-        lblNumPlayers->setText(QCoreApplication::translate("MainWindow", "Number of Players:", nullptr));
         createTable->setText(QCoreApplication::translate("MainWindow", "Create Table", nullptr));
+        lblNumPlayers->setText(QCoreApplication::translate("MainWindow", "Number of Players:", nullptr));
         runCalcs->setText(QCoreApplication::translate("MainWindow", "Calculate", nullptr));
-        lblDate->setText(QCoreApplication::translate("MainWindow", "Date (MMDDYY):", nullptr));
+        lblDate->setText(QCoreApplication::translate("MainWindow", "Date:", nullptr));
+        btnUseCrntDate->setText(QCoreApplication::translate("MainWindow", "Use Current Date", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tabNewGame), QCoreApplication::translate("MainWindow", "New Game", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tabTotalStats), QCoreApplication::translate("MainWindow", "Total Stats", nullptr));
-        lblDateOfPlay->setText(QCoreApplication::translate("MainWindow", "Date of Play (MMDDYY): ", nullptr));
+        lblDateOfPlay->setText(QCoreApplication::translate("MainWindow", "Date of Play: ", nullptr));
         btnNightInfo->setText(QCoreApplication::translate("MainWindow", "Get Night Info", nullptr));
+        lblNightsPlayed->setText(QCoreApplication::translate("MainWindow", "Nights Played", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tabGetNightInfo), QCoreApplication::translate("MainWindow", "Get Night Info", nullptr));
     } // retranslateUi
 
