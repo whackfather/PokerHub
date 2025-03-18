@@ -21,7 +21,7 @@ FORMS += \
     mainwindow.ui
 
 RC_ICONS += \
-    icon.ico
+    phIcon.ico
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
