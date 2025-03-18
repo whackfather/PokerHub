@@ -20,11 +20,11 @@ typedef enum columns {
 } columns;
 
 // Function declarations
-vector<string> getNightsList();
-vector<string> getPlayerNameList();
-float getTotal(columns, string);
-vector<vector<string>> getPlayerInfo(string, vector<vector<string>>);
-vector<vector<string>> getNightInfo(string, vector<vector<string>>);
+vector<string> getNightsList(vector<vector<string>>&);
+vector<string> getPlayerNameList(vector<vector<string>>&);
+float getTotal(columns, string, vector<vector<string>>&);
+vector<vector<string>> getPlayerInfo(string, vector<vector<string>>&);
+vector<vector<string>> getNightInfo(string, vector<vector<string>>&);
 vector<vector<string>> readData(string);
 void writeData();
 float roundUp(float, int);

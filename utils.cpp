@@ -13,8 +13,7 @@
 using namespace std;
 
 // Get list of all nights played ever
-vector<string> getNightsList() {
-    vector<vector<string>> csvData = readData("data.csv");
+vector<string> getNightsList(vector<vector<string>>& csvData) {
     vector<string> nightList;
 
     for (int i = 0; i < int(csvData.size()); i++) {
@@ -29,8 +28,7 @@ vector<string> getNightsList() {
 }
 
 // Get list of all players ever
-vector<string> getPlayerNameList() {
-    vector<vector<string>> csvData = readData("data.csv");
+vector<string> getPlayerNameList(vector<vector<string>>& csvData) {
     vector<string> playerList;
 
     for (int i = 0; i < int(csvData.size()); i++) {
@@ -45,10 +43,9 @@ vector<string> getPlayerNameList() {
 }
 
 // Get totals for one person (or TOTAL)
-float getTotal(columns column, string name) {
-    vector<vector<string>> csvData = readData("data.csv");
-    float total = 0.0;
+float getTotal(columns column, string name, vector<vector<string>>& csvData) {
     vector<vector<string>> target = getPlayerInfo(name, csvData);
+    float total = 0.0;
 
     for (int i = 0; i < int(target.size()); i++) {
         total += stof(target[i][column]);
@@ -58,7 +55,7 @@ float getTotal(columns column, string name) {
 }
 
 // Get info for specific player (or TOTAL) in a 2D vector
-vector<vector<string>> getPlayerInfo(string playerName, vector<vector<string>> csvData) {
+vector<vector<string>> getPlayerInfo(string playerName, vector<vector<string>>& csvData) {
     vector<vector<string>> player;
 
     for (int row = 0; row < int(csvData.size()); row++) {
@@ -71,7 +68,7 @@ vector<vector<string>> getPlayerInfo(string playerName, vector<vector<string>> c
 }
 
 // Get info for a game of poker given a specific date of play
-vector<vector<string>> getNightInfo(string desiredDate, vector<vector<string>> csvData) {
+vector<vector<string>> getNightInfo(string desiredDate, vector<vector<string>>& csvData) {
     int startKey = 0, playerNum = 0;
     for (int i = 0; i <= int(csvData.size()); i++) {
         if (csvData[i][0] == desiredDate) {
