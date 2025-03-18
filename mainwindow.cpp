@@ -113,6 +113,8 @@ void MainWindow::on_btnNightInfo_clicked() {
     if (::find(nightsList.begin(), nightsList.end(), desiredDate) == nightsList.end()) {
         ui->tblNightInfo->setRowCount(0);
         ui->tblNightInfo->setColumnCount(0);
+        ui->statusBar->showMessage(QString("Date not in database."), 3000);
+        ui->statusBar->setStyleSheet("QStatusBar {color: red;}");
         return;
     }
     vector<vector<string>> csvData = readData("data.csv");
