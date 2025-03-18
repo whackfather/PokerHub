@@ -20,20 +20,35 @@ int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     MainWindow w;
     w.setWindowIcon(QIcon("icon.png"));
-    w.setFixedSize(700, 535);
+    w.setFixedSize(742, 535);
     w.setWindowTitle("PokerHub");
     w.show();
     return a.exec();
     return 0;
 }
 
-// Get list of all players ever.
+vector<string> getNightsList() {
+    vector<vector<string>> csvData = readData("data.csv");
+    vector<string> nightList;
+
+    for (int i = 0; i < int(csvData.size()); i++) {
+        if (csvData[i][0].find('/') != string::npos) {
+            if (find(nightList.begin(), nightList.end(), csvData[i][0]) == nightList.end()) {
+                nightList.push_back(csvData[i][0]);
+            }
+        }
+    }
+
+    return nightList;
+}
+
+// Get list of all players ever
 vector<string> getPlayerNameList() {
     vector<vector<string>> csvData = readData("data.csv");
     vector<string> playerList;
 
     for (int i = 0; i < int(csvData.size()); i++) {
-        if (!isOnlyDigits(csvData[i][0]) && csvData[i][0] != "TOTAL" && csvData[i][0] != "END") {
+        if (csvData[i][0].find('/') == string::npos && csvData[i][0] != "TOTAL" && csvData[i][0] != "END") {
             if (find(playerList.begin(), playerList.end(), csvData[i][0]) == playerList.end()) {
                 playerList.push_back(csvData[i][0]);
             }
@@ -105,11 +120,6 @@ vector<vector<string>> readData(string filePath) {
 
     file.close();
     return data;
-}
-
-// Check if a string only contains digits
-bool isOnlyDigits(const string& str) {
-    return !str.empty() && all_of(str.begin(), str.end(), ::isdigit);
 }
 
 // Round up a number to a given number of decimals
