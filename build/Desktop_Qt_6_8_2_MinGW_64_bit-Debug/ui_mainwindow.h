@@ -19,7 +19,6 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
@@ -59,8 +58,7 @@ public:
     QDateEdit *getDate;
     QListWidget *listNightsPlayed;
     QLabel *lblNightsPlayed;
-    QMenuBar *menubar;
-    QStatusBar *statusbar;
+    QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -177,13 +175,10 @@ public:
         lblNightsPlayed->setAlignment(Qt::AlignmentFlag::AlignCenter);
         tabWidget->addTab(tabGetNightInfo, QString());
         MainWindow->setCentralWidget(centralwidget);
-        menubar = new QMenuBar(MainWindow);
-        menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 756, 21));
-        MainWindow->setMenuBar(menubar);
-        statusbar = new QStatusBar(MainWindow);
-        statusbar->setObjectName("statusbar");
-        MainWindow->setStatusBar(statusbar);
+        statusBar = new QStatusBar(MainWindow);
+        statusBar->setObjectName("statusBar");
+        statusBar->setSizeGripEnabled(false);
+        MainWindow->setStatusBar(statusBar);
 
         retranslateUi(MainWindow);
 
