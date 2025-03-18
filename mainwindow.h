@@ -1,15 +1,21 @@
+// PokerHub main window header file
+// Written by Roman Rodriguez
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+// Include statements
 #include "qlistwidget.h"
 #include <QMainWindow>
 
+// Namespace definition
 QT_BEGIN_NAMESPACE
 namespace Ui {
     class MainWindow;
 }
 QT_END_NAMESPACE
 
+// MainWindow class definition
 class MainWindow : public QMainWindow {
     Q_OBJECT
 

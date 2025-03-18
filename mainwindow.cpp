@@ -1,3 +1,7 @@
+// PokerHub main window functions
+// Written by Roman Rodriguez
+
+// Include statements
 #include <cmath>
 #include <cstdio>
 #include <vector>
@@ -8,14 +12,17 @@
 #include "ui_mainwindow.h"
 using namespace std;
 
+// UI setup
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainWindow) {
     ui->setupUi(this);
 }
 
+// Close window
 MainWindow::~MainWindow() {
     delete ui;
 }
 
+// Create new game table for specified number of players
 void MainWindow::on_createTable_clicked() {
     int rows = ui->rowsOfTbl->text().toInt();
     int cols = 6;
@@ -31,6 +38,7 @@ void MainWindow::on_createTable_clicked() {
     ui->tblInputStats->setItem(rows, 0, new QTableWidgetItem(QString("TOTAL")));
 }
 
+// Calculate values and fill out new game table
 void MainWindow::on_runCalcs_clicked() {
     float buyIn = 0.0, grossWin = 0.0, tip = 0.0, postTip = 0.0, netWin = 0.0;
     float totalBuyIn = 0.0, totalGross = 0.0, totalTip = 0.0, totalPost = 0.0, totalNet = 0.0;
@@ -59,11 +67,13 @@ void MainWindow::on_runCalcs_clicked() {
     ui->tblInputStats->setItem(rows, 5, new QTableWidgetItem(QString::number(totalNet, 'f', 2)));
 }
 
+// Delete new game table
 void MainWindow::on_deleteTable_clicked() {
     ui->tblInputStats->setRowCount(0);
     ui->tblInputStats->setColumnCount(0);
 }
 
+// Save new game table to database
 void MainWindow::on_saveGame_clicked() {
     FILE *data;
     data = fopen("data.csv", "a");
@@ -96,6 +106,7 @@ void MainWindow::on_saveGame_clicked() {
     fclose(data);
 }
 
+// Create night info table for a specific night from database
 void MainWindow::on_btnNightInfo_clicked() {
     vector<string> nightsList = getNightsList();
     string desiredDate = ui->getDate->text().toStdString();
@@ -124,8 +135,9 @@ void MainWindow::on_btnNightInfo_clicked() {
     }
 }
 
-
+// Update tab information when switching tabs
 void MainWindow::on_tabWidget_tabBarClicked(int index) {
+    // Update lifetime stats
     if (index == 1) {
         vector<string> playerList = getPlayerNameList();
         int rows = int(playerList.size());
@@ -152,7 +164,10 @@ void MainWindow::on_tabWidget_tabBarClicked(int index) {
         for (int i = 1; i < 6; i++) {
             ui->tblLifetime->setItem(rows, i, new QTableWidgetItem(QString::number(getTotal(columns(i), "TOTAL"), 'f', 2)));
         }
-    } else if (index == 2) {
+    }
+
+    // Update list of nights played
+    else if (index == 2) {
         ui->listNightsPlayed->clear();
         vector<string> nightsPlayed = getNightsList();
         for (int i = 0; i < int(nightsPlayed.size()); i++) {
@@ -161,11 +176,12 @@ void MainWindow::on_tabWidget_tabBarClicked(int index) {
     }
 }
 
+// Use clicked date in get night info date box
 void MainWindow::on_listNightsPlayed_itemClicked(QListWidgetItem *item) {
     ui->getDate->setDate(QDate::fromString(item->text(), "M/d/yyyy"));
 }
 
+// Use current date in new game date box
 void MainWindow::on_btnUseCrntDate_clicked() {
     ui->dateNewGame->setDate(QDate::currentDate());
 }
-
