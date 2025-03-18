@@ -12,9 +12,13 @@
 #include "ui_mainwindow.h"
 using namespace std;
 
+// Define statements
+#define ERR_TIMEOUT 3000
+
 // UI setup
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainWindow) {
     ui->setupUi(this);
+    ui->statusBar->setStyleSheet("QStatusBar {color: red;}");
 }
 
 // Close window
@@ -22,49 +26,83 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
+// Check to make sure a valid number was entered into the player count field
+bool MainWindow::checkPlayerCount() {
+    string errCheck = ui->rowsOfTbl->text().toStdString();
+    if (errCheck.size() == 0) {
+        ui->statusBar->showMessage(QString("Please enter a number of players."), ERR_TIMEOUT);
+        return false;
+    } else {
+        for (char c : errCheck) {
+            if (!isdigit(c)) {
+                ui->statusBar->showMessage(QString("Please enter a number of players."), ERR_TIMEOUT);
+                return false;
+            }
+        }
+    }
+
+    ui->statusBar->clearMessage();
+    return true;
+}
+
 // Create new game table for specified number of players
 void MainWindow::on_createTable_clicked() {
-    int rows = ui->rowsOfTbl->text().toInt();
-    int cols = 6;
-    ui->tblInputStats->setRowCount(rows + 1);
-    ui->tblInputStats->setColumnCount(cols);
-    ui->tblInputStats->setHorizontalHeaderLabels({"Name",
-                                                  "Buy-In",
-                                                  "Gross Winnings",
-                                                  "Tip (Blank for 5%)",
-                                                  "Post Tip",
-                                                  "Net Winnings"});
-    ui->tblInputStats->setColumnWidth(3, 110);
-    ui->tblInputStats->setItem(rows, 0, new QTableWidgetItem(QString("TOTAL")));
+    if (checkPlayerCount()) {
+        int rows = ui->rowsOfTbl->text().toInt();
+        int cols = 6;
+        ui->tblInputStats->setRowCount(rows + 1);
+        ui->tblInputStats->setColumnCount(cols);
+        ui->tblInputStats->setHorizontalHeaderLabels({"Name",
+                                                      "Buy-In",
+                                                      "Gross Winnings",
+                                                      "Tip (Blank for 5%)",
+                                                      "Post Tip",
+                                                      "Net Winnings"});
+        ui->tblInputStats->setColumnWidth(3, 110);
+        ui->tblInputStats->setItem(rows, 0, new QTableWidgetItem(QString("TOTAL")));
+    }
 }
 
 // Calculate values and fill out new game table
 void MainWindow::on_runCalcs_clicked() {
-    float buyIn = 0.0, grossWin = 0.0, tip = 0.0, postTip = 0.0, netWin = 0.0;
-    float totalBuyIn = 0.0, totalGross = 0.0, totalTip = 0.0, totalPost = 0.0, totalNet = 0.0;
-    int rows = ui->rowsOfTbl->text().toInt();
+    if (checkPlayerCount()) {
+        int rows = ui->rowsOfTbl->text().toInt();
 
-    for (int i = 0; i < rows; i++) {
-        buyIn = ui->tblInputStats->item(i, 1)->text().toFloat(); totalBuyIn += buyIn;
-        grossWin = ui->tblInputStats->item(i, 2)->text().toFloat(); totalGross += grossWin;
-        if (ui->tblInputStats->item(i, 3) == nullptr || ui->tblInputStats->item(i, 3)->text().isEmpty()) {
-            tip = roundDown(0.05 * grossWin, 2);
-        } else {
-            tip = ui->tblInputStats->item(i, 3)->text().toFloat();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (ui->tblInputStats->item(i, j) == nullptr || ui->tblInputStats->item(i, j)->text().isEmpty()) {
+                    ui->statusBar->showMessage(QString("Please fill out all Name, Buy-In, and Gross Winnings fields."), ERR_TIMEOUT);
+                    return;
+                }
+            }
         }
-        totalTip += tip;
-        postTip = grossWin - tip; totalPost += postTip;
-        netWin = postTip - buyIn; totalNet += netWin;
-        ui->tblInputStats->setItem(i, 3, new QTableWidgetItem(QString::number(tip, 'f', 2)));
-        ui->tblInputStats->setItem(i, 4, new QTableWidgetItem(QString::number(postTip, 'f', 2)));
-        ui->tblInputStats->setItem(i, 5, new QTableWidgetItem(QString::number(netWin, 'f', 2)));
-    }
+        ui->statusBar->clearMessage();
 
-    ui->tblInputStats->setItem(rows, 1, new QTableWidgetItem(QString::number(totalBuyIn, 'f', 2)));
-    ui->tblInputStats->setItem(rows, 2, new QTableWidgetItem(QString::number(totalGross, 'f', 2)));
-    ui->tblInputStats->setItem(rows, 3, new QTableWidgetItem(QString::number(totalTip, 'f', 2)));
-    ui->tblInputStats->setItem(rows, 4, new QTableWidgetItem(QString::number(totalPost, 'f', 2)));
-    ui->tblInputStats->setItem(rows, 5, new QTableWidgetItem(QString::number(totalNet, 'f', 2)));
+        float buyIn = 0.0, grossWin = 0.0, tip = 0.0, postTip = 0.0, netWin = 0.0;
+        float totalBuyIn = 0.0, totalGross = 0.0, totalTip = 0.0, totalPost = 0.0, totalNet = 0.0;
+
+        for (int i = 0; i < rows; i++) {
+            buyIn = ui->tblInputStats->item(i, 1)->text().toFloat(); totalBuyIn += buyIn;
+            grossWin = ui->tblInputStats->item(i, 2)->text().toFloat(); totalGross += grossWin;
+            if (ui->tblInputStats->item(i, 3) == nullptr || ui->tblInputStats->item(i, 3)->text().isEmpty()) {
+                tip = roundDown(0.05 * grossWin, 2);
+            } else {
+                tip = ui->tblInputStats->item(i, 3)->text().toFloat();
+            }
+            totalTip += tip;
+            postTip = grossWin - tip; totalPost += postTip;
+            netWin = postTip - buyIn; totalNet += netWin;
+            ui->tblInputStats->setItem(i, 3, new QTableWidgetItem(QString::number(tip, 'f', 2)));
+            ui->tblInputStats->setItem(i, 4, new QTableWidgetItem(QString::number(postTip, 'f', 2)));
+            ui->tblInputStats->setItem(i, 5, new QTableWidgetItem(QString::number(netWin, 'f', 2)));
+        }
+
+        ui->tblInputStats->setItem(rows, 1, new QTableWidgetItem(QString::number(totalBuyIn, 'f', 2)));
+        ui->tblInputStats->setItem(rows, 2, new QTableWidgetItem(QString::number(totalGross, 'f', 2)));
+        ui->tblInputStats->setItem(rows, 3, new QTableWidgetItem(QString::number(totalTip, 'f', 2)));
+        ui->tblInputStats->setItem(rows, 4, new QTableWidgetItem(QString::number(totalPost, 'f', 2)));
+        ui->tblInputStats->setItem(rows, 5, new QTableWidgetItem(QString::number(totalNet, 'f', 2)));
+    }
 }
 
 // Delete new game table
@@ -75,6 +113,37 @@ void MainWindow::on_deleteTable_clicked() {
 
 // Save new game table to database
 void MainWindow::on_saveGame_clicked() {
+    string date = ui->dateNewGame->text().toStdString();
+    int noOfPlayers = 0;
+    if (checkPlayerCount()) {
+        noOfPlayers = ui->rowsOfTbl->text().toInt();
+    } else {
+        return;
+    }
+    if (ui->tblInputStats->rowCount() == 0 || ui->tblInputStats->columnCount() == 0) {
+        ui->statusBar->showMessage(QString("Please create a table."), ERR_TIMEOUT);
+        return;
+    } else {
+        for (int i = 0; i < noOfPlayers; i++) {
+            for (int j = 0; j < 6; j++) {
+                if (ui->tblInputStats->item(i, j) == nullptr || ui->tblInputStats->item(i, j)->text().isEmpty()) {
+                    ui->statusBar->showMessage(QString("Please fill out all necessary fields and run calculations."), ERR_TIMEOUT);
+                    return;
+                }
+            }
+        }
+        vector<vector<string>> csvData = readData("data.csv");
+        vector<string> nightsList = getNightsList(csvData);
+        if (date == "1/1/2000") {
+            ui->statusBar->showMessage(QString("Please change date from placeholder."), ERR_TIMEOUT);
+            return;
+        } else if (::find(nightsList.begin(), nightsList.end(), date) != nightsList.end()) {
+            ui->statusBar->showMessage(QString("A game with this date already exists in the database."), ERR_TIMEOUT);
+            return;
+        }
+    }
+    ui->statusBar->clearMessage();
+
     FILE *data;
     data = fopen("data.csv", "a");
 
@@ -82,9 +151,6 @@ void MainWindow::on_saveGame_clicked() {
         printf("Failed to open data.csv.");
         exit(EXIT_FAILURE);
     }
-
-    string date = ui->dateNewGame->text().toStdString();
-    int noOfPlayers = ui->rowsOfTbl->text().toInt();
 
     fprintf(data, "%s,%d,0,0,0,0\n", date.c_str(), noOfPlayers);
 
@@ -108,17 +174,19 @@ void MainWindow::on_saveGame_clicked() {
 
 // Create night info table for a specific night from database
 void MainWindow::on_btnNightInfo_clicked() {
-    vector<string> nightsList = getNightsList();
     string desiredDate = ui->getDate->text().toStdString();
+    vector<vector<string>> csvData = readData("data.csv");
+    vector<string> nightsList = getNightsList(csvData);
+
     if (::find(nightsList.begin(), nightsList.end(), desiredDate) == nightsList.end()) {
         ui->tblNightInfo->setRowCount(0);
         ui->tblNightInfo->setColumnCount(0);
         ui->statusBar->showMessage(QString("Date not in database."), 3000);
-        ui->statusBar->setStyleSheet("QStatusBar {color: red;}");
         return;
     }
-    vector<vector<string>> csvData = readData("data.csv");
+
     vector<vector<string>> nightInfo = getNightInfo(desiredDate, csvData);
+
     int rows = nightInfo.size() - 1;
     int cols = nightInfo[0].size();
     ui->tblNightInfo->setRowCount(rows);
@@ -139,9 +207,11 @@ void MainWindow::on_btnNightInfo_clicked() {
 
 // Update tab information when switching tabs
 void MainWindow::on_tabWidget_tabBarClicked(int index) {
+    vector<vector<string>> csvData = readData("data.csv");
+
     // Update lifetime stats
     if (index == 1) {
-        vector<string> playerList = getPlayerNameList();
+        vector<string> playerList = getPlayerNameList(csvData);
         int rows = int(playerList.size());
         int cols = 6;
 
@@ -158,20 +228,20 @@ void MainWindow::on_tabWidget_tabBarClicked(int index) {
             string playerName = playerList[i];
             ui->tblLifetime->setItem(i, 0, new QTableWidgetItem(QString(playerName.c_str())));
             for (int j = 1; j < 6; j++) {
-                ui->tblLifetime->setItem(i, j, new QTableWidgetItem(QString::number(getTotal(columns(j), playerName), 'f', 2)));
+                ui->tblLifetime->setItem(i, j, new QTableWidgetItem(QString::number(getTotal(columns(j), playerName, csvData), 'f', 2)));
             }
         }
 
         ui->tblLifetime->setItem(rows, 0, new QTableWidgetItem(QString("TOTAL")));
         for (int i = 1; i < 6; i++) {
-            ui->tblLifetime->setItem(rows, i, new QTableWidgetItem(QString::number(getTotal(columns(i), "TOTAL"), 'f', 2)));
+            ui->tblLifetime->setItem(rows, i, new QTableWidgetItem(QString::number(getTotal(columns(i), "TOTAL", csvData), 'f', 2)));
         }
     }
 
     // Update list of nights played
     else if (index == 2) {
         ui->listNightsPlayed->clear();
-        vector<string> nightsPlayed = getNightsList();
+        vector<string> nightsPlayed = getNightsList(csvData);
         for (int i = 0; i < int(nightsPlayed.size()); i++) {
             ui->listNightsPlayed->addItem(QString(nightsPlayed[i].c_str()));
         }

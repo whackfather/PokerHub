@@ -24,6 +24,8 @@ class MainWindow : public QMainWindow {
         ~MainWindow();
 
     private slots:
+        bool checkPlayerCount();
+
         void on_createTable_clicked();
 
         void on_runCalcs_clicked();
