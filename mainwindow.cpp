@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-#include "main.h"
+#include "utils.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 using namespace std;
