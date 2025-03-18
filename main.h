@@ -21,13 +21,13 @@ typedef enum columns {
 } columns;
 
 // Function declarations
+vector<string> getNightsList();
 vector<string> getPlayerNameList();
 float getTotal(columns, string);
 vector<vector<string>> getPlayerInfo(string, vector<vector<string>>);
 vector<vector<string>> getNightInfo(string, vector<vector<string>>);
 vector<vector<string>> readData(string);
 void writeData();
-bool isOnlyDigits(const string&);
 float roundUp(float, int);
 float roundDown(float, int);
 
