@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <vector>
 #include <string>
+#include <algorithm>
 #include "main.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -72,7 +73,7 @@ void MainWindow::on_saveGame_clicked() {
         exit(EXIT_FAILURE);
     }
 
-    string date = ui->dateOfPlay->text().toStdString();
+    string date = ui->dateNewGame->text().toStdString();
     int noOfPlayers = ui->rowsOfTbl->text().toInt();
 
     fprintf(data, "%s,%d,0,0,0,0\n", date.c_str(), noOfPlayers);
@@ -96,13 +97,25 @@ void MainWindow::on_saveGame_clicked() {
 }
 
 void MainWindow::on_btnNightInfo_clicked() {
-    string desiredDate = ui->getDoP->text().toStdString();
+    vector<string> nightsList = getNightsList();
+    string desiredDate = ui->getDate->text().toStdString();
+    if (::find(nightsList.begin(), nightsList.end(), desiredDate) == nightsList.end()) {
+        ui->tblNightInfo->setRowCount(0);
+        ui->tblNightInfo->setColumnCount(0);
+        return;
+    }
     vector<vector<string>> csvData = readData("data.csv");
     vector<vector<string>> nightInfo = getNightInfo(desiredDate, csvData);
     int rows = nightInfo.size() - 1;
     int cols = nightInfo[0].size();
     ui->tblNightInfo->setRowCount(rows);
     ui->tblNightInfo->setColumnCount(cols);
+    ui->tblNightInfo->setHorizontalHeaderLabels({"Name",
+                                                  "Buy-In",
+                                                  "Gross Winnings",
+                                                  "Tip",
+                                                  "Post Tip",
+                                                  "Net Winnings"});
 
     for (int i = 1; i <= rows; i++) {
         for (int j = 0; j < cols; j++) {
@@ -139,5 +152,20 @@ void MainWindow::on_tabWidget_tabBarClicked(int index) {
         for (int i = 1; i < 6; i++) {
             ui->tblLifetime->setItem(rows, i, new QTableWidgetItem(QString::number(getTotal(columns(i), "TOTAL"), 'f', 2)));
         }
+    } else if (index == 2) {
+        ui->listNightsPlayed->clear();
+        vector<string> nightsPlayed = getNightsList();
+        for (int i = 0; i < int(nightsPlayed.size()); i++) {
+            ui->listNightsPlayed->addItem(QString(nightsPlayed[i].c_str()));
+        }
     }
 }
+
+void MainWindow::on_listNightsPlayed_itemClicked(QListWidgetItem *item) {
+    ui->getDate->setDate(QDate::fromString(item->text(), "M/d/yyyy"));
+}
+
+void MainWindow::on_btnUseCrntDate_clicked() {
+    ui->dateNewGame->setDate(QDate::currentDate());
+}
+

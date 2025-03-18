@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "qlistwidget.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -28,6 +29,10 @@ class MainWindow : public QMainWindow {
         void on_btnNightInfo_clicked();
 
         void on_tabWidget_tabBarClicked(int index);
+
+        void on_listNightsPlayed_itemClicked(QListWidgetItem *item);
+
+        void on_btnUseCrntDate_clicked();
 
     private:
     Ui::MainWindow *ui;

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>696</width>
-    <height>532</height>
+    <width>756</width>
+    <height>534</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -72,16 +72,6 @@
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0">
-        <widget class="QLabel" name="lblNumPlayers">
-         <property name="text">
-          <string>Number of Players:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="0">
         <widget class="QLineEdit" name="rowsOfTbl"/>
        </item>
@@ -89,6 +79,16 @@
         <widget class="QPushButton" name="createTable">
          <property name="text">
           <string>Create Table</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="lblNumPlayers">
+         <property name="text">
+          <string>Number of Players:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -106,7 +106,7 @@
        <rect>
         <x>10</x>
         <y>63</y>
-        <width>631</width>
+        <width>635</width>
         <height>341</height>
        </rect>
       </property>
@@ -114,30 +114,43 @@
        <number>0</number>
       </property>
      </widget>
-     <widget class="QLineEdit" name="dateOfPlay">
-      <property name="geometry">
-       <rect>
-        <x>530</x>
-        <y>33</y>
-        <width>108</width>
-        <height>24</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="QLabel" name="lblDate">
       <property name="geometry">
        <rect>
-        <x>530</x>
-        <y>10</y>
-        <width>108</width>
-        <height>16</height>
+        <x>535</x>
+        <y>0</y>
+        <width>110</width>
+        <height>47</height>
        </rect>
       </property>
       <property name="text">
-       <string>Date (MMDDYY):</string>
+       <string>Date:</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignmentFlag::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QDateEdit" name="dateNewGame">
+      <property name="geometry">
+       <rect>
+        <x>535</x>
+        <y>35</y>
+        <width>110</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnUseCrntDate">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>35</y>
+        <width>101</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Use Current Date</string>
       </property>
      </widget>
     </widget>
@@ -149,8 +162,8 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>20</y>
-        <width>671</width>
+        <y>10</y>
+        <width>625</width>
         <height>431</height>
        </rect>
       </property>
@@ -165,7 +178,7 @@
        <rect>
         <x>10</x>
         <y>70</y>
-        <width>651</width>
+        <width>625</width>
         <height>381</height>
        </rect>
       </property>
@@ -176,22 +189,19 @@
         <x>10</x>
         <y>20</y>
         <width>227</width>
-        <height>48</height>
+        <height>49</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="0" column="0">
         <widget class="QLabel" name="lblDateOfPlay">
          <property name="text">
-          <string>Date of Play (MMDDYY): </string>
+          <string>Date of Play: </string>
          </property>
          <property name="alignment">
           <set>Qt::AlignmentFlag::AlignCenter</set>
          </property>
         </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLineEdit" name="getDoP"/>
        </item>
        <item row="1" column="1">
         <widget class="QPushButton" name="btnNightInfo">
@@ -200,7 +210,40 @@
          </property>
         </widget>
        </item>
+       <item row="1" column="0">
+        <widget class="QDateEdit" name="getDate">
+         <property name="buttonSymbols">
+          <enum>QAbstractSpinBox::ButtonSymbols::NoButtons</enum>
+         </property>
+        </widget>
+       </item>
       </layout>
+     </widget>
+     <widget class="QListWidget" name="listNightsPlayed">
+      <property name="geometry">
+       <rect>
+        <x>650</x>
+        <y>70</y>
+        <width>81</width>
+        <height>381</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblNightsPlayed">
+      <property name="geometry">
+       <rect>
+        <x>650</x>
+        <y>50</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Nights Played</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignCenter</set>
+      </property>
      </widget>
     </widget>
    </widget>
@@ -210,7 +253,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>696</width>
+     <width>756</width>
      <height>21</height>
     </rect>
    </property>
