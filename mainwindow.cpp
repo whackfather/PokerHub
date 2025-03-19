@@ -13,12 +13,11 @@
 using namespace std;
 
 // Define statements
-#define ERR_TIMEOUT 3000
+#define TIMEOUT 3000
 
 // UI setup
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainWindow) {
     ui->setupUi(this);
-    ui->statusBar->setStyleSheet("QStatusBar {color: red;}");
 }
 
 // Close window
@@ -28,20 +27,21 @@ MainWindow::~MainWindow() {
 
 // Check to make sure a valid number was entered into the player count field
 bool MainWindow::checkPlayerCount() {
+    ui->statusBar->setStyleSheet("QStatusBar {color: red;}");
     string errCheck = ui->rowsOfTbl->text().toStdString();
     if (errCheck.size() == 0) {
-        ui->statusBar->showMessage(QString("Please enter a number of players."), ERR_TIMEOUT);
+        ui->statusBar->showMessage(QString("Please enter a number of players."), TIMEOUT);
         return false;
     } else {
         for (char c : errCheck) {
             if (!isdigit(c)) {
-                ui->statusBar->showMessage(QString("Please enter a number of players."), ERR_TIMEOUT);
+                ui->statusBar->showMessage(QString("Please enter a number of players."), TIMEOUT);
                 return false;
             }
         }
     }
-
     ui->statusBar->clearMessage();
+
     return true;
 }
 
@@ -66,12 +66,12 @@ void MainWindow::on_createTable_clicked() {
 // Calculate values and fill out new game table
 void MainWindow::on_runCalcs_clicked() {
     if (checkPlayerCount()) {
+        ui->statusBar->setStyleSheet("QStatusBar {color: red;}");
         int rows = ui->rowsOfTbl->text().toInt();
-
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < 3; j++) {
                 if (ui->tblInputStats->item(i, j) == nullptr || ui->tblInputStats->item(i, j)->text().isEmpty()) {
-                    ui->statusBar->showMessage(QString("Please fill out all Name, Buy-In, and Gross Winnings fields."), ERR_TIMEOUT);
+                    ui->statusBar->showMessage(QString("Please fill out all Name, Buy-In, and Gross Winnings fields."), TIMEOUT);
                     return;
                 }
             }
@@ -115,19 +115,21 @@ void MainWindow::on_deleteTable_clicked() {
 void MainWindow::on_saveGame_clicked() {
     string date = ui->dateNewGame->text().toStdString();
     int noOfPlayers = 0;
+
+    ui->statusBar->setStyleSheet("QStatusBar {color: red;}");
     if (checkPlayerCount()) {
         noOfPlayers = ui->rowsOfTbl->text().toInt();
     } else {
         return;
     }
     if (ui->tblInputStats->rowCount() == 0 || ui->tblInputStats->columnCount() == 0) {
-        ui->statusBar->showMessage(QString("Please create a table."), ERR_TIMEOUT);
+        ui->statusBar->showMessage(QString("Please create a table."), TIMEOUT);
         return;
     } else {
         for (int i = 0; i < noOfPlayers; i++) {
             for (int j = 0; j < 6; j++) {
                 if (ui->tblInputStats->item(i, j) == nullptr || ui->tblInputStats->item(i, j)->text().isEmpty()) {
-                    ui->statusBar->showMessage(QString("Please fill out all necessary fields and run calculations."), ERR_TIMEOUT);
+                    ui->statusBar->showMessage(QString("Please fill out all necessary fields and run calculations."), TIMEOUT);
                     return;
                 }
             }
@@ -135,10 +137,10 @@ void MainWindow::on_saveGame_clicked() {
         vector<vector<string>> csvData = readData("data.csv");
         vector<string> nightsList = getNightsList(csvData);
         if (date == "1/1/2000") {
-            ui->statusBar->showMessage(QString("Please change date from placeholder."), ERR_TIMEOUT);
+            ui->statusBar->showMessage(QString("Please change date from placeholder."), TIMEOUT);
             return;
         } else if (::find(nightsList.begin(), nightsList.end(), date) != nightsList.end()) {
-            ui->statusBar->showMessage(QString("A game with this date already exists in the database."), ERR_TIMEOUT);
+            ui->statusBar->showMessage(QString("A game with this date already exists in the database."), TIMEOUT);
             return;
         }
     }
@@ -170,6 +172,9 @@ void MainWindow::on_saveGame_clicked() {
     fprintf(data, "END,0,0,0,0,0\n");
 
     fclose(data);
+
+    ui->statusBar->setStyleSheet("QStatusBar {color: green;}");
+    ui->statusBar->showMessage(QString("Game saved successfully."), TIMEOUT);
 }
 
 // Create night info table for a specific night from database
@@ -181,6 +186,7 @@ void MainWindow::on_btnNightInfo_clicked() {
     if (::find(nightsList.begin(), nightsList.end(), desiredDate) == nightsList.end()) {
         ui->tblNightInfo->setRowCount(0);
         ui->tblNightInfo->setColumnCount(0);
+        ui->statusBar->setStyleSheet("QStatusBar {color: red;}");
         ui->statusBar->showMessage(QString("Date not in database."), 3000);
         return;
     }
@@ -203,6 +209,9 @@ void MainWindow::on_btnNightInfo_clicked() {
             ui->tblNightInfo->setItem(i - 1, j, new QTableWidgetItem(QString(nightInfo[i][j].c_str())));
         }
     }
+
+    ui->statusBar->setStyleSheet("QStatusBar {color: green;}");
+    ui->statusBar->showMessage(QString("Game information loaded successfully."), TIMEOUT);
 }
 
 // Update tab information when switching tabs
@@ -236,6 +245,9 @@ void MainWindow::on_tabWidget_tabBarClicked(int index) {
         for (int i = 1; i < 6; i++) {
             ui->tblLifetime->setItem(rows, i, new QTableWidgetItem(QString::number(getTotal(columns(i), "TOTAL", csvData), 'f', 2)));
         }
+
+        ui->statusBar->setStyleSheet("QStatusBar {color: green;}");
+        ui->statusBar->showMessage(QString("Lifetime statistics loaded successfully."), TIMEOUT);
     }
 
     // Update list of nights played
