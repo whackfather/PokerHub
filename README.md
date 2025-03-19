@@ -13,4 +13,6 @@ Unfortunately, PokerHub still has some key limitations which may eventually be f
 Since PokerHub was targeted at myself, it fits my specific needs and not the needs of the general user. If you use PokerHub for yourself and find bugs or would like to request features, let me know and I will do my best to make those things happen.
 
 ## Install Instructions
-Go to build -> Desktop_Qt_6_8_2_MinGW_64_bit-Release -> release -> PokerHub.exe and use the ellipses in the top right to download PokerHub.exe. In file explorer, create a new folder and place PokerHub.exe in that folder. This is necessary because PokerHub will automatically generate a csv file in the directory it is in called data.csv where it will store all game data.
+Go to build -> Desktop_Qt_6_8_2_MinGW_64_bit-Debug -> debug -> PokerHub.exe and use the ellipses in the top right to download PokerHub.exe. In file explorer, create a new folder and place PokerHub.exe in that folder. This is necessary because PokerHub will automatically generate a csv file in the directory it is in called data.csv where it will store all game data.
+
+For some reason the release version of the app is broken, I'm not sure how or why, just use the debug version for now.
