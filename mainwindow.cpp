@@ -47,6 +47,8 @@ bool MainWindow::checkPlayerCount() {
 
 // Create new game table for specified number of players
 void MainWindow::on_createTable_clicked() {
+    ui->tblInputStats->setRowCount(0);
+    ui->tblInputStats->setColumnCount(0);
     if (checkPlayerCount()) {
         int rows = ui->rowsOfTbl->text().toInt();
         int cols = 6;
