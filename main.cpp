@@ -5,14 +5,13 @@
 #include <QApplication>
 #include <QIcon>
 #include "mainwindow.h"
-using namespace std;
 
 // Main function
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     MainWindow w;
     w.setFixedSize(742, 535);
-    w.setWindowTitle("PokerHub");
+    w.setWindowTitle("PokerTracker");
     w.show();
     return a.exec();
 }

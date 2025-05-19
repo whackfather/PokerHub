@@ -58,6 +58,7 @@ public:
     QDateEdit *getDate;
     QListWidget *listNightsPlayed;
     QLabel *lblNightsPlayed;
+    QWidget *tab;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -136,7 +137,7 @@ public:
         tabTotalStats->setObjectName("tabTotalStats");
         tblLifetime = new QTableWidget(tabTotalStats);
         tblLifetime->setObjectName("tblLifetime");
-        tblLifetime->setGeometry(QRect(10, 10, 625, 431));
+        tblLifetime->setGeometry(QRect(10, 10, 625, 471));
         tabWidget->addTab(tabTotalStats, QString());
         tabGetNightInfo = new QWidget();
         tabGetNightInfo->setObjectName("tabGetNightInfo");
@@ -174,6 +175,9 @@ public:
         lblNightsPlayed->setGeometry(QRect(650, 50, 81, 16));
         lblNightsPlayed->setAlignment(Qt::AlignmentFlag::AlignCenter);
         tabWidget->addTab(tabGetNightInfo, QString());
+        tab = new QWidget();
+        tab->setObjectName("tab");
+        tabWidget->addTab(tab, QString());
         MainWindow->setCentralWidget(centralwidget);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName("statusBar");
@@ -204,6 +208,7 @@ public:
         btnNightInfo->setText(QCoreApplication::translate("MainWindow", "Get Night Info", nullptr));
         lblNightsPlayed->setText(QCoreApplication::translate("MainWindow", "Nights Played", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tabGetNightInfo), QCoreApplication::translate("MainWindow", "Get Night Info", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "Player Profiles", nullptr));
     } // retranslateUi
 
 };

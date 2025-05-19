@@ -10,14 +10,13 @@
 #include <string>
 #include <algorithm>
 #include "utils.h"
-using namespace std;
 
 // Get list of all nights played ever
-vector<string> getNightsList(vector<vector<string>>& csvData) {
-    vector<string> nightList;
+std::vector<std::string> getNightsList(std::vector<std::vector<std::string>>& csvData) {
+    std::vector<std::string> nightList;
 
     for (int i = 0; i < int(csvData.size()); i++) {
-        if (csvData[i][0].find('/') != string::npos) {
+        if (csvData[i][0].find('/') != std::string::npos) {
             if (find(nightList.begin(), nightList.end(), csvData[i][0]) == nightList.end()) {
                 nightList.push_back(csvData[i][0]);
             }
@@ -28,11 +27,11 @@ vector<string> getNightsList(vector<vector<string>>& csvData) {
 }
 
 // Get list of all players ever
-vector<string> getPlayerNameList(vector<vector<string>>& csvData) {
-    vector<string> playerList;
+std::vector<std::string> getPlayerNameList(std::vector<std::vector<std::string>>& csvData) {
+    std::vector<std::string> playerList;
 
     for (int i = 0; i < int(csvData.size()); i++) {
-        if (csvData[i][0].find('/') == string::npos && csvData[i][0] != "TOTAL" && csvData[i][0] != "END") {
+        if (csvData[i][0].find('/') == std::string::npos && csvData[i][0] != "TOTAL" && csvData[i][0] != "END") {
             if (find(playerList.begin(), playerList.end(), csvData[i][0]) == playerList.end()) {
                 playerList.push_back(csvData[i][0]);
             }
@@ -43,8 +42,8 @@ vector<string> getPlayerNameList(vector<vector<string>>& csvData) {
 }
 
 // Get totals for one person (or TOTAL)
-float getTotal(columns column, string name, vector<vector<string>>& csvData) {
-    vector<vector<string>> target = getPlayerInfo(name, csvData);
+float getTotal(columns column, std::string name, std::vector<std::vector<std::string>>& csvData) {
+    std::vector<std::vector<std::string>> target = getPlayerInfo(name, csvData);
     float total = 0.0;
 
     for (int i = 0; i < int(target.size()); i++) {
@@ -55,8 +54,8 @@ float getTotal(columns column, string name, vector<vector<string>>& csvData) {
 }
 
 // Get info for specific player (or TOTAL) in a 2D vector
-vector<vector<string>> getPlayerInfo(string playerName, vector<vector<string>>& csvData) {
-    vector<vector<string>> player;
+std::vector<std::vector<std::string>> getPlayerInfo(std::string playerName, std::vector<std::vector<std::string>>& csvData) {
+    std::vector<std::vector<std::string>> player;
 
     for (int row = 0; row < int(csvData.size()); row++) {
         if (csvData[row][0] == playerName) {
@@ -68,31 +67,31 @@ vector<vector<string>> getPlayerInfo(string playerName, vector<vector<string>>& 
 }
 
 // Get info for a game of poker given a specific date of play
-vector<vector<string>> getNightInfo(string desiredDate, vector<vector<string>>& csvData) {
+std::vector<std::vector<std::string>> getNightInfo(std::string desiredDate, std::vector<std::vector<std::string>>& csvData) {
     int startKey = 0, playerNum = 0;
     for (int i = 0; i <= int(csvData.size()); i++) {
         if (csvData[i][0] == desiredDate) {
             startKey = i;
-            string playerNumStr = csvData[i][1];
+            std::string playerNumStr = csvData[i][1];
             playerNum = stoi(playerNumStr);
             break;
         }
     }
 
-    vector<vector<string>> desiredInfo = vector<vector<string>>(csvData.begin() + startKey, csvData.begin() + (startKey + playerNum + 2));
+    std::vector<std::vector<std::string>> desiredInfo = std::vector<std::vector<std::string>>(csvData.begin() + startKey, csvData.begin() + (startKey + playerNum + 2));
     return desiredInfo;
 }
 
 // Read data from csv file into a 2D vector
-vector<vector<string>> readData(string filePath) {
-    vector<vector<string>> data;
-    ifstream file(filePath);
-    string line;
+std::vector<std::vector<std::string>> readData(std::string filePath) {
+    std::vector<std::vector<std::string>> data;
+    std::ifstream file(filePath);
+    std::string line;
 
     while (getline(file, line)) {
-        vector<string> row;
-        stringstream lineStream(line);
-        string cell;
+        std::vector<std::string> row;
+        std::stringstream lineStream(line);
+        std::string cell;
 
         while (getline(lineStream, cell, ',')) {
             row.push_back(cell);

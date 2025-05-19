@@ -7,7 +7,6 @@
 // Include statements
 #include <vector>
 #include <string>
-using namespace std;
 
 // Columns type definition
 typedef enum columns {
@@ -20,12 +19,12 @@ typedef enum columns {
 } columns;
 
 // Function declarations
-vector<string> getNightsList(vector<vector<string>>&);
-vector<string> getPlayerNameList(vector<vector<string>>&);
-float getTotal(columns, string, vector<vector<string>>&);
-vector<vector<string>> getPlayerInfo(string, vector<vector<string>>&);
-vector<vector<string>> getNightInfo(string, vector<vector<string>>&);
-vector<vector<string>> readData(string);
+std::vector<std::string> getNightsList(std::vector<std::vector<std::string>>&);
+std::vector<std::string> getPlayerNameList(std::vector<std::vector<std::string>>&);
+float getTotal(columns, std::string, std::vector<std::vector<std::string>>&);
+std::vector<std::vector<std::string>> getPlayerInfo(std::string, std::vector<std::vector<std::string>>&);
+std::vector<std::vector<std::string>> getNightInfo(std::string, std::vector<std::vector<std::string>>&);
+std::vector<std::vector<std::string>> readData(std::string);
 void writeData();
 float roundUp(float, int);
 float roundDown(float, int);

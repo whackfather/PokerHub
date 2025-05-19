@@ -10,7 +10,6 @@
 #include "utils.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-using namespace std;
 
 // Define statements
 #define TIMEOUT 3000
@@ -28,7 +27,7 @@ MainWindow::~MainWindow() {
 // Check to make sure a valid number was entered into the player count field
 bool MainWindow::checkPlayerCount() {
     ui->statusBar->setStyleSheet("QStatusBar {color: red;}");
-    string errCheck = ui->rowsOfTbl->text().toStdString();
+    std::string errCheck = ui->rowsOfTbl->text().toStdString();
     if (errCheck.size() == 0) {
         ui->statusBar->showMessage(QString("Please enter a number of players."), TIMEOUT);
         return false;
@@ -115,7 +114,7 @@ void MainWindow::on_deleteTable_clicked() {
 
 // Save new game table to database
 void MainWindow::on_saveGame_clicked() {
-    string date = ui->dateNewGame->text().toStdString();
+    std::string date = ui->dateNewGame->text().toStdString();
     int noOfPlayers = 0;
 
     ui->statusBar->setStyleSheet("QStatusBar {color: red;}");
@@ -136,12 +135,12 @@ void MainWindow::on_saveGame_clicked() {
                 }
             }
         }
-        vector<vector<string>> csvData = readData("data.csv");
-        vector<string> nightsList = getNightsList(csvData);
+        std::vector<std::vector<std::string>> csvData = readData("data.csv");
+        std::vector<std::string> nightsList = getNightsList(csvData);
         if (date == "1/1/2000") {
             ui->statusBar->showMessage(QString("Please change date from placeholder."), TIMEOUT);
             return;
-        } else if (::find(nightsList.begin(), nightsList.end(), date) != nightsList.end()) {
+        } else if (std::find(nightsList.begin(), nightsList.end(), date) != nightsList.end()) {
             ui->statusBar->showMessage(QString("A game with this date already exists in the database."), TIMEOUT);
             return;
         }
@@ -158,7 +157,7 @@ void MainWindow::on_saveGame_clicked() {
 
     fprintf(data, "%s,%d,0,0,0,0\n", date.c_str(), noOfPlayers);
 
-    string name;
+    std::string name;
     float buyIn, grossWin, tip, postTip, netWin;
 
     for (int i = 0; i <= noOfPlayers; i++) {
@@ -181,11 +180,11 @@ void MainWindow::on_saveGame_clicked() {
 
 // Create night info table for a specific night from database
 void MainWindow::on_btnNightInfo_clicked() {
-    string desiredDate = ui->getDate->text().toStdString();
-    vector<vector<string>> csvData = readData("data.csv");
-    vector<string> nightsList = getNightsList(csvData);
+    std::string desiredDate = ui->getDate->text().toStdString();
+    std::vector<std::vector<std::string>> csvData = readData("data.csv");
+    std::vector<std::string> nightsList = getNightsList(csvData);
 
-    if (::find(nightsList.begin(), nightsList.end(), desiredDate) == nightsList.end()) {
+    if (std::find(nightsList.begin(), nightsList.end(), desiredDate) == nightsList.end()) {
         ui->tblNightInfo->setRowCount(0);
         ui->tblNightInfo->setColumnCount(0);
         ui->statusBar->setStyleSheet("QStatusBar {color: red;}");
@@ -193,7 +192,7 @@ void MainWindow::on_btnNightInfo_clicked() {
         return;
     }
 
-    vector<vector<string>> nightInfo = getNightInfo(desiredDate, csvData);
+    std::vector<std::vector<std::string>> nightInfo = getNightInfo(desiredDate, csvData);
 
     int rows = nightInfo.size() - 1;
     int cols = nightInfo[0].size();
@@ -218,11 +217,11 @@ void MainWindow::on_btnNightInfo_clicked() {
 
 // Update tab information when switching tabs
 void MainWindow::on_tabWidget_tabBarClicked(int index) {
-    vector<vector<string>> csvData = readData("data.csv");
+    std::vector<std::vector<std::string>> csvData = readData("data.csv");
 
     // Update lifetime stats
     if (index == 1) {
-        vector<string> playerList = getPlayerNameList(csvData);
+        std::vector<std::string> playerList = getPlayerNameList(csvData);
         int rows = int(playerList.size());
         int cols = 6;
 
@@ -236,7 +235,7 @@ void MainWindow::on_tabWidget_tabBarClicked(int index) {
                                                     "Net Winnings"});
 
         for (int i = 0; i < rows; i++) {
-            string playerName = playerList[i];
+            std::string playerName = playerList[i];
             ui->tblLifetime->setItem(i, 0, new QTableWidgetItem(QString(playerName.c_str())));
             for (int j = 1; j < 6; j++) {
                 ui->tblLifetime->setItem(i, j, new QTableWidgetItem(QString::number(getTotal(columns(j), playerName, csvData), 'f', 2)));
@@ -255,8 +254,8 @@ void MainWindow::on_tabWidget_tabBarClicked(int index) {
     // Update list of nights played
     else if (index == 2) {
         ui->listNightsPlayed->clear();
-        vector<string> nightsPlayed = getNightsList(csvData);
-        for (int i = 0; i < int(nightsPlayed.size()); i++) {
+        std::vector<std::string> nightsPlayed = getNightsList(csvData);
+        for (int i = nightsPlayed.size() - 1; i >= 0; i--) {
             ui->listNightsPlayed->addItem(QString(nightsPlayed[i].c_str()));
         }
     }
